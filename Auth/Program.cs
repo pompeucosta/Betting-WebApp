@@ -1,5 +1,5 @@
 using Auth.Data;
-using Microsoft.AspNetCore.Identity;
+using Auth.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +17,15 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<DataContext>();
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
+{
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredUniqueChars = 0;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 5;
+    options.Password.RequireDigit = false;
+}
+).AddEntityFrameworkStores<DataContext>();
 
 var app = builder.Build();
 
@@ -29,10 +36,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//dotnet tool install dotnet-ef
-//
-
-app.MapIdentityApi<IdentityUser>();
+using(var scope = app.Services.CreateScope())
+{
+    scope.ServiceProvider.GetRequiredService<DataContext>().Database.EnsureCreated();
+}
 
 app.UseHttpsRedirection();
 
