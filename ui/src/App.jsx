@@ -12,10 +12,12 @@ function App() {
       <div className="App">
         <Header />
         <Sidenav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </div>
         <Footer />
       </div>
     </BrowserRouter>
