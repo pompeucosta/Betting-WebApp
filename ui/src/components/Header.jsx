@@ -1,9 +1,9 @@
 import React from 'react'
-import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
+import { Navbar, Nav, Button } from 'react-bootstrap'
 
 const Header = () => {
     return (
-        <Navbar variant='dark' expand="lg" className="navbar">
+        <Navbar variant='dark' expand="lg" className="navbar" fixed="top">
         <Navbar.Brand href="#">NextGen SportsBet Inc.</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
