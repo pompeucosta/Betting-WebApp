@@ -4,6 +4,13 @@ body, html, #root, .App {
   margin: 0;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 .navbar {
@@ -12,27 +19,41 @@ body, html, #root, .App {
   justify-content: space-between;
   padding: 10px;
   height: 60px;
+  box-sizing: border-box;
 }
 
 .sidenav {
-  height: calc(100% - 60px);
-  width: 250px;
+  width: 20%;
+  background: #fff;
   position: fixed;
-  z-index: 1;
   top: 60px;
-  left: 0;
+  margin-bottom: 70px;
+  left: 10%;
   overflow-x: hidden;
   padding-top: 10px;
+  transition: width 0.3s ease;
 }
 
-.content {
+.betPreview {
+  width: 20%;
+  background: #fff;
+  position: fixed;
+  top: 60px;
+  margin-bottom: 70px;
+  right: 10%;
+  overflow-x: hidden;
+  padding-top: 10px;
+  transition: width 0.3s ease;
+}
+
+.gameList {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  padding-top: 60px;
+  position: relative;
+  margin-left: 30%;
+  margin-right: 30%;
+  top: 60px;
+  margin-bottom: 70px;
+  box-sizing: border-box;
 }
 
 .gameCard {
@@ -41,7 +62,7 @@ body, html, #root, .App {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px;
   padding: 20px;
-  width: 600px;
+  box-sizing: border-box;
 }
 
 .gameCardContent {
@@ -49,12 +70,6 @@ body, html, #root, .App {
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
-}
-
-.gameList {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .oddsButton {
@@ -75,4 +90,24 @@ footer {
   padding: 10px;
   text-align: center;
   width: 100%;
+  height: 60px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .sidenav {
+    display: none;
+  }
+
+  .gameList {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+  .betPreview {
+    position: static;
+    width: 100%;
+    height: auto;
+    display: block;
+  }  
 }

@@ -6,7 +6,7 @@ const Error = () => {
             <h1>Error Page</h1>
             <p>Oops! Something went wrong.</p>
         </div>
-    );
-};
+    )
+}
 
-export default Error;
+export default Error

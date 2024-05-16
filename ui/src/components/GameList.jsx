@@ -1,7 +1,7 @@
-import React from 'react';
-import Game from './Game';
+import React from 'react'
+import GameCard from './GameCard'
 
-const GameList = () => {
+const GameList = ({ onBetSelected }) => {
     const games = {
         game1: {
             homeTeam: 'Team 1',
@@ -75,15 +75,21 @@ const GameList = () => {
         }
     }
 
+    const handleClick = (bet) => {
+        onBetSelected(bet)
+    }
+
     return (
         <div className='gameList'>
-            <ul>
-                {Object.values(games).map((game, index) => (
-                    <Game key={index} game={game} />
-                ))}
-            </ul>
+            {Object.keys(games).length > 0 ? (
+                Object.values(games).map((game, index) => (
+                    <GameCard key={index} game={game} handleClick={handleClick} />
+                ))
+            ) : (
+                <p>No games available.</p>
+            )}
         </div>
-    );
-};
+    )
+}
 
-export default GameList;
+export default GameList
