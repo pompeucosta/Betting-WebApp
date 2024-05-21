@@ -38,7 +38,8 @@ if (app.Environment.IsDevelopment())
 
 using(var scope = app.Services.CreateScope())
 {
-    scope.ServiceProvider.GetRequiredService<DataContext>().Database.EnsureCreated();
+    var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+    context.Database.EnsureCreated();
 }
 
 app.UseHttpsRedirection();

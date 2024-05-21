@@ -10,5 +10,14 @@ namespace Auth.Data
         {
 
         }
+        public DbSet<User> UsersList { get; set; } = null!;
+        public DbSet<ApplicationUser> ApplicationUsersList { get; set; } = null!;
+        public DbSet<Wallet> WalletsList { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+        
     }
 }
