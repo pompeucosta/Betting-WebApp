@@ -5,8 +5,8 @@ import '../css/Register.css';
 const Register = () => {
     return (
         <div className="container-fluid bg-light vh-100 d-flex justify-content-center align-items-center" >
-        <div className="card p-4 shadow">
-            <h1 className='text-center mb-4'>Register</h1>
+        <div className="card p-4 shadow w-50">
+            <h1 className='text-center mb-3'>Register</h1>
             <Form>
                 <Form.Group controlId="formFirstName" className="mb-3">
                     <Form.Label>First Name</Form.Label>

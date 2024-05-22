@@ -16,10 +16,7 @@ register-button {
   }
 
   .container-fluid {
-    margin-top: 100px;
+    margin-top: 140px;
+    margin-bottom: 30px;
 }
 
-.card {
-    width: 40%;
-    max-width: 500px; 
-}

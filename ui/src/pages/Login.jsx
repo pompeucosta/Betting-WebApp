@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <div className="container-fluid bg-light vh-100 d-flex justify-content-center align-items-center">
       <div className="card p-4 shadow">
-        <h1 className="text-center mb-4">Login</h1>
+        <h1 className="text-center mb-3">Login</h1>
         <form>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">Username</label>
