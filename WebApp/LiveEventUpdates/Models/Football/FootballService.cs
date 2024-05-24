@@ -7,26 +7,26 @@ namespace WebApp.LiveEventUpdates.Models.Football
         public async Task<IEnumerable<ISportData>> GetLiveSportData()
         {
             // Example. FOR TESTING PURPOSES ONLY
-            //FootballData[] fd =
-            //[
-            //    new FootballData
-            //    {
-            //        AwayGoals = 0,
-            //        HomeGoals = 3,
-            //        Status = "First Half",
-            //        Teams = [new Team { LogoURL = "url", Name = "benfica" }, new Team { LogoURL = "url2", Name = "porto" }],
-            //        TimeElapsed = 32
-            //    },
-            //    new FootballData
-            //    {
-            //        AwayGoals = 2,
-            //        HomeGoals = 2,
-            //        Status = "Second Half",
-            //        Teams = [new Team { LogoURL = "u", Name = "boavista" }, new Team { LogoURL = "u2", Name = "ronaldo" }],
-            //        TimeElapsed = 87
-            //    },
-            //];
-            //return fd;
+            FootballData[] fd =
+            [
+                new FootballData
+                {
+                    AwayGoals = 0,
+                    HomeGoals = 3,
+                    Status = "First Half",
+                    Teams = [new Team { LogoURL = "url", Name = "benfica" }, new Team { LogoURL = "url2", Name = "porto" }],
+                    TimeElapsed = 32
+                },
+                new FootballData
+                {
+                    AwayGoals = 2,
+                    HomeGoals = 2,
+                    Status = "Second Half",
+                    Teams = [new Team { LogoURL = "u", Name = "boavista" }, new Team { LogoURL = "u2", Name = "ronaldo" }],
+                    TimeElapsed = 87
+                },
+            ];
+            return fd;
             return await RequestLiveDataAsync();
         }
 
