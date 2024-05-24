@@ -3,12 +3,7 @@ import { Link } from 'react-router-dom';
 import '../css/Login.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-    MDBContainer,
-    MDBInput,
-    MDBBtn,
-}
-    from 'mdb-react-ui-kit';
+
 
 function Login() {
 
@@ -38,8 +33,9 @@ function Login() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: email,
-                password: password
+                Email: email,
+                Password: password,
+                RememberMe : true
             }),
         }).then(data => {
             console.log(data);
@@ -47,7 +43,7 @@ function Login() {
                 setError("Login successful");
                 navigate('/');
             } else {
-                setError("Login failed");
+              setError("Login failed: " + (data.message ? data.message : 'Unknown error'));
             }
         }).catch(error => {
                 console.error('Error:', error);
@@ -71,7 +67,7 @@ function Login() {
           </div>
           <button type="submit" onClick={handleSubmit} className="w-100 mb-3 login-button">Login</button>
         </form>
-        <p className="text-center">Not a member? <Link to="/register" className="register-link">Registre-se aqui</Link></p>
+        <p className="text-center">Not a member? <Link to="/register" className="register-link">Register here</Link></p>
       </div>
     </div>
   );

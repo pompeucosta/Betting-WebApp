@@ -4,17 +4,6 @@ import '../css/Register.css';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-    MDBContainer,
-    MDBInput,
-    MDBBtn,
-    MDBTabs,
-    MDBTabsItem,
-    MDBTabsLink,
-    MDBTabsContent,
-    MDBTabsPane
-}
-    from 'mdb-react-ui-kit';
 
 function Register (){
     const [fullName, setFullName] = useState('');
@@ -67,9 +56,7 @@ function Register (){
             body: JSON.stringify({
                 email: email,
                 password: password,
-                dateOfBirth: dateOfBirth,
-                fullName: fullName,
-                phoneNumber: phoneNumber
+                name: fullName
             }),
         }).then(data => {
             console.log(data);
@@ -91,14 +78,9 @@ function Register (){
         <div className="card p-4 shadow w-50">
             <h1 className='text-center mb-3'>Register</h1>
             <Form>
-                <Form.Group controlId="formFirstName" className="mb-3">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your first name" />
-                </Form.Group>
-
-                <Form.Group controlId="formLastName" className="mb-3">
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your last name" />
+                <Form.Group controlId="formFullName" className="mb-3">
+                    <Form.Label>Full Name</Form.Label>
+                    <Form.Control type="text" name='fullName' value={fullName} onChange={handleChange} placeholder="Enter your full name" />
                 </Form.Group>
 
                 <Form.Group controlId="formEmail" className="mb-3">

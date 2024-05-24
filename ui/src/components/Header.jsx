@@ -17,7 +17,7 @@ const Header = () => {
 
     return (
         <Navbar variant='dark' expand="lg" className="navbar" fixed="top">
-        <Navbar.Brand href="#" className='px-3'>NextGen SportsBet Inc.</Navbar.Brand>
+        <Navbar.Brand href="/" className='px-3'>NextGen SportsBet Inc.</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
