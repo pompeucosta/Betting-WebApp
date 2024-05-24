@@ -8,9 +8,9 @@ const BetCard = ({ bet, handleRemoveBet, onBetAmountChange }) => {
                 <Button variant="danger" onClick={() => handleRemoveBet(bet)}>X</Button>
             </Card.Header>
             <Card.Body>
-                <h6>{bet.game.homeTeam} vs {bet.game.awayTeam}</h6>
+                <h6>{bet.game.teams[0].name} vs {bet.game.teams[1].name}</h6>
                 <h5>{bet.team}</h5>
-                <p>{bet.odds}</p>
+                <p>{bet.odds}</p>   
                 <Form>
                     <Form.Group controlId="betAmount">
                         <Form.Control type="number" placeholder="Amount" onChange={(e) => onBetAmountChange(bet, e.target.value)} />

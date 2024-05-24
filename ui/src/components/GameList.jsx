@@ -1,14 +1,34 @@
-import React from 'react'
-import GameCard from './GameCard'
+import React, { useEffect, useState } from 'react';
+import GameCard from './GameCard';
 
 
 
 const GameList = ({ onBetSelected }) => {
 
-    //const [games, setGames] = useState([]);
+    const [games, setGames] = useState([]);
+ 
+
+    useEffect(() => {
+        const fetchGames = async () => {
+            try {
+                
+                const response = await fetch('http://localhost:5242/GetLiveData');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch games');
+                }
+                const gamesData = await response.json();
+                console.log('gamesData:', gamesData)
+                setGames(gamesData);
+            } catch (error) {
+                console.error('Erro ao obter os jogos:', error);
+            }
+        };
+        fetchGames();
+    }, []);
+
 
   
-
+    /*
     const games = {
         game1: {
             homeTeam: 'Team 1',
@@ -81,7 +101,7 @@ const GameList = ({ onBetSelected }) => {
             oddsAwayTeam: '1.8'
         }
     }
-    
+    */
 
     const handleClick = (bet) => {
         onBetSelected(bet)
