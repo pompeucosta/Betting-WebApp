@@ -1,24 +1,77 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Login.css';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+    MDBContainer,
+    MDBInput,
+    MDBBtn,
+}
+    from 'mdb-react-ui-kit';
 
-const Login = () => {
+function Login() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    if (name === 'email') setEmail(value);
+    if (name === 'password') setPassword(value);
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (!email || !password) {
+        setError('Please fill in all fields');
+        return;
+    } else {
+        setError("");
+
+        fetch('http://localhost:5242/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            }),
+        }).then(data => {
+            console.log(data);
+            if (data.ok) {
+                setError("Login successful");
+                navigate('/');
+            } else {
+                setError("Login failed");
+            }
+        }).catch(error => {
+                console.error('Error:', error);
+                setError("Login failed");
+        });
+    }
+  }
+
   return (
     <div className="container-fluid bg-light vh-100 d-flex justify-content-center align-items-center">
       <div className="card p-4 shadow">
         <h1 className="text-center mb-3">Login</h1>
         <form>
           <div className="mb-3">
-            <label htmlFor="username" className="form-label">Username</label>
-            <input type="text" className="form-control" id="username" name="username" required />
+            <label htmlFor="email" className="form-label">Email</label>
+            <input type="email" className="form-control" id="email" name="email" value={email} onChange={handleChange} required />
           </div>
           <div className="mb-3">
             <label htmlFor="password" className="form-label">Password</label>
-            <input type="password" className="form-control" id="password" name="password" required />
+            <input type="password" className="form-control" id="password" name="password" value={password} onChange={handleChange} required />
           </div>
-          <button type="submit" className="w-100 mb-3 login-button">Login</button>
+          <button type="submit" onClick={handleSubmit} className="w-100 mb-3 login-button">Login</button>
         </form>
-        <p className="text-center">Não tem uma conta? <Link to="/register" className="register-link">Registre-se aqui</Link></p>
+        <p className="text-center">Not a member? <Link to="/register" className="register-link">Registre-se aqui</Link></p>
       </div>
     </div>
   );
