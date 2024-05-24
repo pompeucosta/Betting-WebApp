@@ -29,12 +29,13 @@ function Register (){
     const handleSubmit = (event) => {
         event.preventDefault();
 
-    
+       
         if (!fullName || !phoneNumber || !email || !password || !confirmPassword) {
+            console.log(fullName, phoneNumber, email, password, confirmPassword);
             setError('Please fill in all fields');
             return;
         }
-
+        console.log("Email: ", email);
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             setError("Please enter a valid email address");
             return;
@@ -47,24 +48,25 @@ function Register (){
             setError("Passwords do not match");
             return;
         }
-
+        console.log("Registering");
+        console.log(fullName, email, password);
+        
         fetch('http://localhost:5242/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: email,
-                password: password,
-                name: fullName
+                Name: fullName,
+                Email: email,
+                Password: password
             }),
         }).then(data => {
-            console.log(data);
             if (data.ok) {
                 setError("Registration successful");
                 navigate('/');
             } else {
-                setError("Registration failed");
+                setError(data.message || "Registration failed");
             }
         }).catch(error => {
             console.error('Error:', error);
@@ -95,7 +97,7 @@ function Register (){
 
                 <Form.Group controlId="formConfirmPassword" className="mb-3">
                     <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type="password" placeholder="Confirm Password" />
+                    <Form.Control type="password" name='confirmPassword' value={confirmPassword} onChange={handleChange} placeholder="Confirm Password" />
                 </Form.Group>
 
                 <Form.Group controlId="formDateOfBirth" className="mb-3">

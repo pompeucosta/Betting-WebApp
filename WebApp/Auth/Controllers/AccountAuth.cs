@@ -52,7 +52,8 @@ namespace WebApp.Auth.Controllers
             }
             else
             {
-                return Results.BadRequest(new { registerResult.Errors });
+
+                return Results.BadRequest(new { Error = "Deu bosta" });
             }
         }
     }

@@ -1,7 +1,14 @@
 import React from 'react'
 import GameCard from './GameCard'
 
+
+
 const GameList = ({ onBetSelected }) => {
+
+    //const [games, setGames] = useState([]);
+
+  
+
     const games = {
         game1: {
             homeTeam: 'Team 1',
@@ -74,6 +81,7 @@ const GameList = ({ onBetSelected }) => {
             oddsAwayTeam: '1.8'
         }
     }
+    
 
     const handleClick = (bet) => {
         onBetSelected(bet)
