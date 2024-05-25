@@ -12,7 +12,7 @@ const GameList = ({ onBetSelected }) => {
         const fetchGames = async () => {
             try {
                 
-                const response = await fetch('http://localhost:5242/GetLiveData');
+                const response = await fetch('/getLiveData');
                 if (!response.ok) {
                     throw new Error('Failed to fetch games');
                 }

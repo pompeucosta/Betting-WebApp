@@ -27,7 +27,7 @@ function Login() {
     } else {
         setError("");
 
-        fetch('http://localhost:5242/login', {
+        fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

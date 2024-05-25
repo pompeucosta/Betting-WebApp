@@ -10,7 +10,7 @@ namespace WebApp.LiveEventUpdates.Controllers
     {
         FootballService footballService = new FootballService();
 
-        [HttpGet("GetLiveData")]
+        [HttpGet("getLiveData")]
         public async Task<IEnumerable<ISportData>> GetLiveData()
         {
             return await footballService.GetLiveSportData();
