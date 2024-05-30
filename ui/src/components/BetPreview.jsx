@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Card, Button } from 'react-bootstrap'
 import BetCard from './BetCard'
 
-const BetPreview = ( { bets, onBetRemoved, onBetCheckout } ) => {
+const BetPreview = ( { bets, onBetRemoved, onBetCheckout, updateBetAmount } ) => {
     const [possibleGains, setPossibleGains] = useState(0)
 
     // useEffect hook to calculate possible gains when bets are removed
@@ -13,7 +13,7 @@ const BetPreview = ( { bets, onBetRemoved, onBetCheckout } ) => {
     const calculatePossibleGains = () => {
         let gains = 0
         bets.forEach((bet) => {
-            gains += bet.amount * bet.odds
+            gains += parseFloat(bet.amount) * parseFloat(bet.odds)
         })
         setPossibleGains(gains)
     }
@@ -21,6 +21,7 @@ const BetPreview = ( { bets, onBetRemoved, onBetCheckout } ) => {
     const onBetAmountChange = (bet, amount) => {
         bet.amount = amount
         calculatePossibleGains() // Recalculate possible gains when bet amount changes
+        updateBetAmount(bet, amount)
     }
 
     const handleRemoveBet = (bet) => {

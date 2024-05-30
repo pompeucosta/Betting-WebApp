@@ -16,6 +16,10 @@ function Home() {
         setBets(bets.filter((b) => b.id !== bet.id))
     }
 
+    const UpdateBetAmount = (bet, amount) => {
+        setBets(bets.map((b) => b.id === bet.id ? { ...b, amount } : b))
+    }
+
     const onBetCheckout = () => {
         navigate('/betcheckout', { state: { bets } })
     }
@@ -24,7 +28,7 @@ function Home() {
         <div>
             <Sidenav />
             <GameList onBetSelected={onBetSelected} />
-            <BetPreview bets={bets} onBetRemoved={onBetRemoved} onBetCheckout={onBetCheckout} />
+            <BetPreview bets={bets} onBetRemoved={onBetRemoved} onBetCheckout={onBetCheckout} updateBetAmount={UpdateBetAmount} />
         </div>
     )
 }
