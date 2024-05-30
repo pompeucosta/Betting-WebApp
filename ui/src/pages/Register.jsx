@@ -76,7 +76,7 @@ function Register (){
 
 
     return (
-        <div className="container-fluid bg-light vh-100 d-flex justify-content-center align-items-center" >
+        <div className="d-flex justify-content-center align-items-center" >
         <div className="card p-4 shadow w-50">
             <h1 className='text-center mb-3'>Register</h1>
             <Form>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Card, Button } from 'react-bootstrap'
 import BetCard from './BetCard'
 
-const BetPreview = ( { bets, onBetRemoved } ) => {
+const BetPreview = ( { bets, onBetRemoved, onBetCheckout } ) => {
     const [possibleGains, setPossibleGains] = useState(0)
 
     // useEffect hook to calculate possible gains when bets are removed
@@ -27,34 +27,35 @@ const BetPreview = ( { bets, onBetRemoved } ) => {
         onBetRemoved(bet)
     }
 
+    const navigateToBetCheckout = () => {
+        onBetCheckout()
+    }
+
     return (
         <div className="betPreview">
-            <Card>
-                <Card.Body>
-                    {bets.length > 0 ? (
-                        bets.map((bet) => (
-                        <div key={bet.id}>
-                            <BetCard bet={bet} handleRemoveBet={handleRemoveBet} onBetAmountChange={onBetAmountChange} />
-                        </div>  
-                    ))
-                    ) : (
-                        <p>No bets placed yet.</p>
-                    )}
-                    {bets.length > 0 ? (
-                        <Card.Footer>
-                            <h5>Possible Gains: {possibleGains}€</h5>
-                            <Button variant="danger">Place Bet</Button>
-                        </Card.Footer>
-                    ) : (
-                        <Card.Footer>
-                            <h5>Possible Gains: {possibleGains}€</h5>
-                            <Button variant="danger" disabled>Place Bet</Button>
-                        </Card.Footer>
-                    )}
-                </Card.Body>
+            <Card style={{ height: '100%' }}>
+                <div className="betPreviewBody">
+                    <Card.Body>
+                        {bets.length > 0 ? (
+                            bets.map((bet) => (
+                                <div key={bet.id}>
+                                    <BetCard bet={bet} handleRemoveBet={handleRemoveBet} onBetAmountChange={onBetAmountChange} />
+                                </div>  
+                            ))
+                        ) : (
+                            <p>No bets placed yet.</p>
+                        )}
+                    </Card.Body>
+                </div>
+                {bets.length > 0 && (
+                    <Card.Footer>
+                        <h5>Possible Gains: {possibleGains}€</h5>
+                        <Button variant="danger" onClick={navigateToBetCheckout}>Place Bet</Button>
+                    </Card.Footer>
+                )}
             </Card>
         </div>
-    )
+    );
 }
 
 export default BetPreview

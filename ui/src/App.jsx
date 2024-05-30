@@ -4,6 +4,7 @@ import Error from './pages/Error'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import BetCheckout from './pages/BetCheckout'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
@@ -12,12 +13,15 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Header />
-          <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="*" element={<Error />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
+          <div className='container py-5 mt-5'>
+            <Routes>
+              <Route path="/" element={<Home/>} />
+              <Route path="*" element={<Error />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/betcheckout" element={<BetCheckout />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </div>
         <Footer />
       </div>
     </BrowserRouter>
