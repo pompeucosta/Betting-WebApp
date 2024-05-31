@@ -3,6 +3,7 @@ using WebApp.Auth.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebApp.Auth.Controllers
 {
@@ -69,6 +70,13 @@ namespace WebApp.Auth.Controllers
 
             return Results.Ok(new { Message = "Register successful" });
 
+        }
+
+        [HttpGet("checkLogIn"),Authorize]
+        public async Task<IResult> isLoggedIn()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            return Results.Ok(new { Email = email });
         }
     }
 }
