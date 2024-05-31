@@ -84,7 +84,7 @@ namespace WebApp.Auth.Controllers
         public async Task<IResult> getUserInfo(DataContext dbContext)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
-            var id = dbContext.Users.Where(_u => _u.UserName == email).First().Id;
+            var id = dbContext.Users.Where(_u => _u.Email == email).First().Id;
             var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == id);
             if(user == null)
             {
