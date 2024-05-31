@@ -43,18 +43,32 @@ namespace WebApp.Auth.Controllers
         [HttpPost("register")]
         public async Task<IResult> Register(UserManager<ApplicationUser> userManager, UserRegisterModel user, DataContext dbContext)
         {
+            var bDate = user.BirthDate;
+            if (bDate.Year <= 0 || bDate.Month <= 0 || bDate.Day <= 0)
+                return Results.BadRequest(new { Message = "Invalid Birthday Date" });
+            
             var identityUser = new ApplicationUser { Email = user.Email, UserName = user.Name };
             var registerResult = await userManager.CreateAsync(identityUser, user.Password);
 
-            if(registerResult.Succeeded) 
+            if(!registerResult.Succeeded) 
             {
-                return Results.Ok(new { Message = "Register successful" });
+                return Results.BadRequest(new { Messages = registerResult.Errors });
             }
-            else
-            {
 
-                return Results.BadRequest(new { Error = "Deu bosta" });
+            try
+            {
+                var newUser = new User { ApplicationUser = identityUser, BirthDate = new DateOnly(bDate.Year, bDate.Month, bDate.Day), PhoneNumber = user.PhoneNumber };
+                dbContext.UsersList.Add(newUser);
+                await dbContext.SaveChangesAsync();
             }
+            catch(Exception ex)
+            {
+                await userManager.DeleteAsync(identityUser);
+                return Results.BadRequest(new {Message =  ex.Message});
+            }
+
+            return Results.Ok(new { Message = "Register successful" });
+
         }
     }
 }

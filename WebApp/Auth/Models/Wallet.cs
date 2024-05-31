@@ -5,10 +5,10 @@ namespace WebApp.Auth.Models
     public class Wallet
     {
         [Key]
-        public string WalletId { get; set; }
+        public int WalletId { get; set; }
 
-        public string Currency { get; set; }
-        public float Balance { get; set; }
+        public string Currency { get; set; } = string.Empty;
+        public float Balance { get; set; } = 0f;
         public List<string> transactions;
 
         public void Deposit(float amount)

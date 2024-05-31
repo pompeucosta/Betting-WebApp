@@ -12,8 +12,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240522224028_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240531113256_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,20 +225,20 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("WebApp.Auth.Models.User", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<DateOnly>("BirthDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WalletId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("WalletId")
+                        .HasColumnType("int");
 
-                    b.HasKey("UserId");
-
-                    b.HasIndex("ApplicationUserId");
+                    b.HasKey("UserID");
 
                     b.HasIndex("WalletId");
 
@@ -247,8 +247,11 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("WebApp.Auth.Models.Wallet", b =>
                 {
-                    b.Property<string>("WalletId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("WalletId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalletId"));
 
                     b.Property<float>("Balance")
                         .HasColumnType("real");
@@ -317,7 +320,7 @@ namespace WebApp.Migrations
                 {
                     b.HasOne("WebApp.Auth.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
