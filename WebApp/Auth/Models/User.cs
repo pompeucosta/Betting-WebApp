@@ -1,18 +1,17 @@
-﻿using WebApp.Auth.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApp.Auth.Models
 {
     public class User
     {
+        //public int UserId { get; set; }
+        public DateOnly BirthDate { get; set; }
+        public string PhoneNumber { get; set; }
         [Key]
-        public string UserId { get; set; } = null!;
-        public string ApplicationUserId { get; set; } = null!;
-        public string WalletId { get; set; } = null!;
-
-        public virtual ApplicationUser ApplicationUser { get; set; } = null!;
-        public virtual Wallet Wallet { get; set; } = null!;
+        [ForeignKey("UserID")]
+        public ApplicationUser ApplicationUser { get; set; }
+        public Wallet Wallet { get; set; } = new Wallet();
 
     }
 
