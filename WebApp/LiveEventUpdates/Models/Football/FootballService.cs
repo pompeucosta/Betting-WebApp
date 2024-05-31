@@ -48,19 +48,13 @@ namespace WebApp.LiveEventUpdates.Models.Football
                     Odds =
                     [
                         new Odd {
-                            id = 1, name = "Which team will score the 2nd goal?", values = 
+                            id = 59, name = "Fulltime Result", values = 
                             [
-                                new Value { value = "1",odd = "0",handicap = null,main = null,suspended = true},
-                                new Value { value = "No goal",odd = "0", handicap = null, main = null,suspended = true},
+                                new Value { value = "0",odd = "1.006",handicap = null,main = null,suspended = false},
+                                new Value { value = "1",odd = "29", handicap = null, main = null,suspended = false},
+                                new Value { value = "2",odd = "81", handicap = null, main = null,suspended = false},
                             ]
                         },
-                        new Odd {
-                            id = 10, name = "To Qualify", values =
-                            [
-                                new Value {value = "1", odd = "2.25",handicap = null,main = null,suspended = false},
-                                new Value {value = "2", odd = "1.571",handicap = null, main = null,suspended = false}
-                            ]
-                        }
                     ]
                 },
                 new FootballOdds
@@ -69,12 +63,13 @@ namespace WebApp.LiveEventUpdates.Models.Football
                     Odds =
                     [
                         new Odd {
-                            id = 90, name = "Which team will score the 3rd goal?", values =
+                            id = 59, name = "Fulltime Result", values =
                             [
-                                new Value {value = "1", odd = "0", handicap = null,main = null,suspended = true},
-                                new Value {value = "No goal", odd = "0", handicap = null, main = null, suspended = true}
+                                new Value { value = "0",odd = "2",handicap = null,main = null,suspended = false},
+                                new Value { value = "1",odd = "1.5", handicap = null, main = null,suspended = false},
+                                new Value { value = "2",odd = "2", handicap = null, main = null,suspended = false},
                             ]
-                        }
+                        },
                     ]
                 }
             ];
