@@ -58,6 +58,14 @@ export default defineConfig({
             '^/getLiveData': {
                 target,
                 secure: false
+            },
+            '^/checkLogIn':{
+                target,
+                secure: false
+            },
+            '^/getUserInfo': {
+                target,
+                secure: false
             }
         },
         port: 5173,
