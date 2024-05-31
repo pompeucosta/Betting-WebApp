@@ -17,8 +17,8 @@ const GameList = ({ onBetSelected }) => {
                     throw new Error('Failed to fetch games');
                 }
                 const gamesData = await response.json();
-                console.log('gamesData:', gamesData)
-                setGames(gamesData);
+                console.log('gamesData:', gamesData.data)
+                setGames(gamesData.data);
             } catch (error) {
                 console.error('Erro ao obter os jogos:', error);
             }
