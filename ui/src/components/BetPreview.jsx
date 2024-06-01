@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Card, Button } from 'react-bootstrap'
 import BetCard from './BetCard'
 
+
 const BetPreview = ( { bets, onBetRemoved, onBetCheckout, updateBetAmount } ) => {
     const [possibleGains, setPossibleGains] = useState(0)
 
@@ -44,7 +45,14 @@ const BetPreview = ( { bets, onBetRemoved, onBetCheckout, updateBetAmount } ) =>
                                 </div>  
                             ))
                         ) : (
-                            <p>No bets placed yet.</p>
+                            <div>
+                                <p style={{ textAlign: 'center', marginTop: '170px' }}>
+                                    <span style={{ fontSize: '22px', color: 'black', fontWeight: 'bold' }}>No bets placed yet.</span>
+                                    <br />
+                                    You haven't added selections to the bulletin yet. Click on the odds to add selections.
+                                </p>
+                            </div>
+            
                         )}
                     </Card.Body>
                 </div>

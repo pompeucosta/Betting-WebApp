@@ -59,6 +59,10 @@ export default defineConfig({
                 target,
                 secure: false
             },
+            '^/getLiveEventOdds': {
+                target,
+                secure: false
+            },
             '^/checkLogIn':{
                 target,
                 secure: false
