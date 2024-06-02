@@ -58,6 +58,14 @@ export default defineConfig({
             '^/getLiveData': {
                 target,
                 secure: false
+            },
+            '^/getBets': {
+                target,
+                secure: false
+            },
+            '^/createBet': {
+                target,
+                secure: false
             }
         },
         port: 5173,
