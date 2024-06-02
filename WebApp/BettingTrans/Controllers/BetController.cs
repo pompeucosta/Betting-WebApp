@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using WebApp.Auth.Models;
 using WebApp.BettingTrans.Models;
 using WebApp.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace WebApp.LiveEventUpdates.Controllers
 {
@@ -12,13 +14,13 @@ namespace WebApp.LiveEventUpdates.Controllers
     [ApiController]
     public class BetController : ControllerBase
     {
-        [HttpPost("createBet")]
+        [HttpPost("createBet"),Authorize]
         public async Task<IResult> CreateBet([FromBody] CreateBetModel createBetModel, [FromServices] DataContext dbContext)
         {
-            var userID = createBetModel.UserID;
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var id = dbContext.Users.Where(_u => _u.Email == email).First().Id;
+            var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == id);
 
-            // Find the user by ID
-            var user = await dbContext.UsersList.FindAsync(userID);
             if (user == null)
             {
                 return Results.BadRequest(new { Message = "UserID does not exist" });
@@ -32,8 +34,6 @@ namespace WebApp.LiveEventUpdates.Controllers
             {
                 return Results.BadRequest(new { Message = "Not enough funds" });
             }
-
-            // Create a new bet
             
             try
             {
@@ -57,9 +57,12 @@ namespace WebApp.LiveEventUpdates.Controllers
             return Results.Ok(new { Message = "Bet created successfully" });
         }
 
-        [HttpGet("getBets")]
-        public async Task<IActionResult> GetBets(string userID, [FromServices] DataContext dbContext)
+        [HttpGet("getBets"),Authorize]
+        public async Task<IActionResult> GetBets([FromServices] DataContext dbContext)
         {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var userID = dbContext.Users.Where(_u => _u.Email == email).First().Id;
+            
             var bets = dbContext.BetsList
                 .Where(b => b.UserID == userID)
                 .Select(b => new { UserID = b.UserID, BetID = b.BetID, FixtureID = b.FixtureID, AmountPlaced = b.AmountPlaced });
