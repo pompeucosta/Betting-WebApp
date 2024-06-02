@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 
-const Header = ({loggedIn}) => {
-
+const Header = () => {
+    const [loggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate();
-
-
+    
     const handleProfileClick = () => {
         navigate('/profile');
     };
@@ -20,6 +19,22 @@ const Header = ({loggedIn}) => {
     const handleRegisterClick = () => {
         navigate('/register');
     };
+
+    useEffect(() => {
+        // Check if user is logged in, endpoint should return 200 if logged in (/checkLogIn)
+        fetch('/checkLogIn', {
+          method: 'GET',
+        })
+          .then((response) => {
+            if (response.status === 200) {
+                setLoggedIn(true);
+            } else {
+                setLoggedIn(false);
+            }
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    }, []);
 
     return (
         <Navbar variant='dark' expand="lg" className="navbar" fixed="top">

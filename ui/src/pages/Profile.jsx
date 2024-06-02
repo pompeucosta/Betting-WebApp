@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import withAuthCheck from '../components/withAuthCheck';
 
-const Profile = ({setIsLoggedIn}) => {
+const Profile = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -29,13 +30,13 @@ const Profile = ({setIsLoggedIn}) => {
     }, []);
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
         fetch('/logout', {
             method: 'POST',
         }).then(response => {
             if (response.ok) {
                 console.log('Logged out successfully');
                 navigate('/');
+                window.location.reload();
             } else {
                 console.error('Failed to logout');
             }
@@ -69,4 +70,4 @@ const Profile = ({setIsLoggedIn}) => {
     );
 };
 
-export default Profile;
+export default withAuthCheck(Profile);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button, Form, FormGroup, Card } from 'react-bootstrap';
+import withAuthCheck from '../components/withAuthCheck';
 
 const BetCheckout = () => {
     const location = useLocation();
@@ -79,4 +80,4 @@ const BetCheckout = () => {
     );
 };
 
-export default BetCheckout;
+export default withAuthCheck(BetCheckout);

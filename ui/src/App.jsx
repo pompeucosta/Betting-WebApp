@@ -7,7 +7,7 @@ import Register from './pages/Register'
 import BetCheckout from './pages/BetCheckout'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Profile from './components/Profile'
+import Profile from './pages/Profile'
 import { useState } from 'react';
 
 function App() {
