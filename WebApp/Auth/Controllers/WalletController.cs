@@ -15,15 +15,13 @@ namespace WebApp.Auth.Controllers
         {
             var userID = depositModel.UserId;
 
-            // Find the user by ID
-            var user = await dbContext.UsersList.SingleOrDefaultAsync(u => u.ApplicationUser.Id == userID);
+            var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == userID);
             if (user == null)
             {
                 return Results.NotFound(new { Message = "User not found" });
             }
-            var walletID = user.WalletID;
-            var wallet = await dbContext.WalletsList.SingleOrDefaultAsync(w => w.WalletId == walletID);
-            
+  
+            var wallet = await dbContext.WalletsList.SingleOrDefaultAsync(w => w.WalletId == user.WalletID);
             if (wallet == null)
             {
                 return Results.NotFound(new { Message = "Wallet not found" });
