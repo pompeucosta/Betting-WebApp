@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { json, useLocation } from 'react-router-dom';
 import { Button, Form, FormGroup, Card } from 'react-bootstrap';
 import withAuthCheck from '../components/withAuthCheck';
 
@@ -8,8 +8,6 @@ const BetCheckout = () => {
     const [bets, setBets] = useState(location.state.bets);
 
     const [formData, setFormData] = useState({
-        amount: '',
-        prediction: '',
         paymentMethod: ''
     });
 
@@ -18,11 +16,39 @@ const BetCheckout = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
-        // TODO: Send to server
-    };
+        let userId = "";
+        // retrieve userId from /checkLogIn
+        try {
+            const response = await fetch('/checkLogIn', {
+                method: 'GET',
+            });
+            if (response.status === 200) {
+                const data = await response.json();
+                userId = data.email; // Assign data.email to userId
+                console.log(userId);
+            } else {
+                navigate('/login');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            navigate('/login');
+        }
+        for (const bet of bets) {
+            console.log(bet.game);
+            let betInfo = {};
+            betInfo = {
+                userId: userId,
+                amountPlaced: bet.amount,
+                fixtureId: bet.game.fixtureID,
+                prediction: bet.team,
+            }
+            console.log(betInfo);
+            // TODO: send to server
+        }
+    }
 
     const handleBetRemoved = (bet) => {
         setBets(bets.filter((b) => b.id !== bet.id));
@@ -71,7 +97,7 @@ const BetCheckout = () => {
                     <option value="">Select a payment method</option>
                     <option value="creditCard">Credit Card</option>
                     <option value="debitCard">Debit Card</option>
-                    <option value="paypal">Wallet</option>
+                    <option value="wallet">Wallet</option>
                 </Form.Select>
             </FormGroup>
                 <Button type="submit">Place Bet</Button>
