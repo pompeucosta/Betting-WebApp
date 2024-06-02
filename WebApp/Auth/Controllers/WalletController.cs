@@ -20,7 +20,7 @@ namespace WebApp.Auth.Controllers
             {
                 return Results.NotFound(new { Message = "User not found" });
             }
-  
+
             var wallet = await dbContext.WalletsList.SingleOrDefaultAsync(w => w.WalletId == user.WalletID);
             if (wallet == null)
             {
@@ -42,7 +42,7 @@ namespace WebApp.Auth.Controllers
         }
 
         [HttpGet("checkBalance")]
-        public async Task<IResult> checkBalance(string userID, [FromServices] DataContext dbContext)
+        public async Task<IResult> CheckBalance(string userID, [FromServices] DataContext dbContext)
         {
 
             var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == userID);
@@ -57,16 +57,45 @@ namespace WebApp.Auth.Controllers
                 return Results.NotFound(new { Message = "Wallet not found" });
             }
 
-            var balance = dbContext.WalletsList
-                .Where(w => w.WalletId == user.WalletID)
-                .Select(w => new { Balance = w.Balance});
-            if (balance == null)
-            {
-                return Results.NotFound(new { Message = "Balance not found" });
-            }
-
-            return Results.Ok(new { Balance = balance });
+            return Results.Ok(new { Balance = wallet.Balance });
         }
 
+        [HttpPost("withdraw")]
+        public async Task<IResult> Withdraw(DepositModel depositModel, [FromServices] DataContext dbContext)
+        {
+
+            var userID = depositModel.UserId;
+
+            var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == userID);
+            if (user == null)
+            {
+                return Results.NotFound(new { Message = "User not found" });
+            }
+
+            var wallet = await dbContext.WalletsList.SingleOrDefaultAsync(w => w.WalletId == user.WalletID);
+            if (wallet == null)
+            {
+                return Results.NotFound(new { Message = "Wallet not found" });
+            }
+
+            var withdrawalResult = wallet.Withdraw(depositModel.Amount);
+
+            if (!withdrawalResult)
+            {
+                return Results.BadRequest(new { Message = "Cannot withdrawal more than available in the wallet" });
+            }
+            try
+            {
+                dbContext.WalletsList.Update(wallet);
+                await dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(new { Message = ex.Message });
+            }
+
+            return Results.Ok(new { Message = "Withdrawal done successfully" });
+
+        }
     }
 }
