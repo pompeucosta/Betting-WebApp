@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import withAuthCheck from '../components/withAuthCheck';
+import BetHistory from '../components/BetHistory';
 
 const Profile = () => {
     const [userData, setUserData] = useState(null);
@@ -54,18 +55,22 @@ const Profile = () => {
     }
 
     return (
-        <div>
-            <h2>User Profile</h2>
-            {userData && (
-                <div>
-                    <p>Name: {userData.userName}</p>
-                    <p>Email: {userData.email}</p>
-                    <p>Date of Birth: {userData.birthDay}</p>
-                    <p>Phone Number: {userData.phoneNumber}</p>
-
-                </div>
-            )}
-            <button onClick={handleLogout}>Logout</button>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+                <h2>User Profile</h2>
+                {userData && (
+                    <div>
+                        <p>Name: {userData.userName}</p>
+                        <p>Email: {userData.email}</p>
+                        <p>Date of Birth: {userData.birthDay}</p>
+                        <p>Phone Number: {userData.phoneNumber}</p>
+                    </div>
+                )}
+                <button onClick={handleLogout}>Logout</button>
+            </div>
+            <div>
+                <BetHistory />
+            </div>
         </div>
     );
 };
