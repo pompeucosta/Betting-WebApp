@@ -12,8 +12,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240531113256_Initial")]
-    partial class Initial
+    [Migration("20240602032338_FixedBet")]
+    partial class FixedBet
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -265,6 +265,31 @@ namespace WebApp.Migrations
                     b.ToTable("WalletsList");
                 });
 
+            modelBuilder.Entity("WebApp.BettingTrans.Models.Bet", b =>
+                {
+                    b.Property<int>("BetID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BetID"));
+
+                    b.Property<float>("AmountPlaced")
+                        .HasColumnType("real");
+
+                    b.Property<int>("FixtureID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("BetID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("BetsList");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -333,6 +358,22 @@ namespace WebApp.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Wallet");
+                });
+
+            modelBuilder.Entity("WebApp.BettingTrans.Models.Bet", b =>
+                {
+                    b.HasOne("WebApp.Auth.Models.User", "User")
+                        .WithMany("BetList")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebApp.Auth.Models.User", b =>
+                {
+                    b.Navigation("BetList");
                 });
 #pragma warning restore 612, 618
         }
