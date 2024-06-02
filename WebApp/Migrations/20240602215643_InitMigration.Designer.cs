@@ -12,7 +12,7 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240602025259_InitMigration")]
+    [Migration("20240602215643_InitMigration")]
     partial class InitMigration
     {
         /// <inheritdoc />
@@ -235,12 +235,12 @@ namespace WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("WalletId")
+                    b.Property<int>("WalletID")
                         .HasColumnType("int");
 
                     b.HasKey("UserID");
 
-                    b.HasIndex("WalletId");
+                    b.HasIndex("WalletID");
 
                     b.ToTable("UsersList");
                 });
@@ -279,13 +279,13 @@ namespace WebApp.Migrations
                     b.Property<int>("FixtureID")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BetID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("BetsList");
                 });
@@ -351,7 +351,7 @@ namespace WebApp.Migrations
 
                     b.HasOne("WebApp.Auth.Models.Wallet", "Wallet")
                         .WithMany()
-                        .HasForeignKey("WalletId")
+                        .HasForeignKey("WalletID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -364,7 +364,7 @@ namespace WebApp.Migrations
                 {
                     b.HasOne("WebApp.Auth.Models.User", "User")
                         .WithMany("BetList")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

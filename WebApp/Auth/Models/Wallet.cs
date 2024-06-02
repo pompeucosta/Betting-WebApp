@@ -6,7 +6,7 @@ namespace WebApp.Auth.Models
     {
         [Key]
         public int WalletId { get; set; }
-        public string Currency { get; set; } = string.Empty;
+        public string Currency { get; set; } = "Euro";
         public float Balance { get; set; } = 0f;
         public ICollection<string> transactions = new List<string>();
 

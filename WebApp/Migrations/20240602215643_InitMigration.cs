@@ -177,7 +177,7 @@ namespace WebApp.Migrations
                     UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WalletId = table.Column<int>(type: "int", nullable: false)
+                    WalletID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,8 +189,8 @@ namespace WebApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UsersList_WalletsList_WalletId",
-                        column: x => x.WalletId,
+                        name: "FK_UsersList_WalletsList_WalletID",
+                        column: x => x.WalletID,
                         principalTable: "WalletsList",
                         principalColumn: "WalletId",
                         onDelete: ReferentialAction.Cascade);
@@ -204,14 +204,14 @@ namespace WebApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AmountPlaced = table.Column<float>(type: "real", nullable: false),
                     FixtureID = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BetsList", x => x.BetID);
                     table.ForeignKey(
-                        name: "FK_BetsList_UsersList_UserId",
-                        column: x => x.UserId,
+                        name: "FK_BetsList_UsersList_UserID",
+                        column: x => x.UserID,
                         principalTable: "UsersList",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
@@ -257,14 +257,14 @@ namespace WebApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BetsList_UserId",
+                name: "IX_BetsList_UserID",
                 table: "BetsList",
-                column: "UserId");
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsersList_WalletId",
+                name: "IX_UsersList_WalletID",
                 table: "UsersList",
-                column: "WalletId");
+                column: "WalletID");
         }
 
         /// <inheritdoc />
