@@ -83,7 +83,7 @@ namespace WebApp.Auth.Controllers
                 return Results.NotFound(new { Message = "Wallet not found" });
             }
 
-            var withdrawalResult = wallet.Withdraw(depositModel.Amount);
+            var withdrawalResult = wallet.Withdraw(amount);
 
             if (!withdrawalResult)
             {
