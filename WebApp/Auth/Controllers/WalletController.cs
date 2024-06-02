@@ -41,5 +41,32 @@ namespace WebApp.Auth.Controllers
             return Results.Ok(new { Message = "Deposit done successfully" });
         }
 
+        [HttpGet("checkBalance")]
+        public async Task<IResult> checkBalance(string userID, [FromServices] DataContext dbContext)
+        {
+
+            var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == userID);
+            if (user == null)
+            {
+                return Results.NotFound(new { Message = "User not found" });
+            }
+
+            var wallet = await dbContext.WalletsList.SingleOrDefaultAsync(w => w.WalletId == user.WalletID);
+            if (wallet == null)
+            {
+                return Results.NotFound(new { Message = "Wallet not found" });
+            }
+
+            var balance = dbContext.WalletsList
+                .Where(w => w.WalletId == user.WalletID)
+                .Select(w => new { Balance = w.Balance});
+            if (balance == null)
+            {
+                return Results.NotFound(new { Message = "Balance not found" });
+            }
+
+            return Results.Ok(new { Balance = balance });
+        }
+
     }
 }
