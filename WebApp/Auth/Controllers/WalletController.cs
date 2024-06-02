@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using WebApp.Auth.Models;
 using WebApp.BettingTrans.Models;
 using WebApp.Data;
@@ -10,10 +12,11 @@ namespace WebApp.Auth.Controllers
     [ApiController]
     public class BetController : ControllerBase
     {
-        [HttpPost("deposit")]
-        public async Task<IResult> Deposit([FromBody] DepositModel depositModel, [FromServices] DataContext dbContext)
+        [HttpPost("deposit"),Authorize]
+        public async Task<IResult> Deposit([FromBody] float amount, [FromServices] DataContext dbContext)
         {
-            var userID = depositModel.UserId;
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var userID = dbContext.Users.Where(_u => _u.Email == email).First().Id;
 
             var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == userID);
             if (user == null)
@@ -27,7 +30,7 @@ namespace WebApp.Auth.Controllers
                 return Results.NotFound(new { Message = "Wallet not found" });
             }
 
-            wallet.Deposit(depositModel.Amount);
+            wallet.Deposit(amount);
             try
             {
                 dbContext.WalletsList.Update(wallet);
@@ -41,10 +44,11 @@ namespace WebApp.Auth.Controllers
             return Results.Ok(new { Message = "Deposit done successfully" });
         }
 
-        [HttpGet("checkBalance")]
-        public async Task<IResult> CheckBalance(string userID, [FromServices] DataContext dbContext)
+        [HttpGet("checkBalance"),Authorize]
+        public async Task<IResult> CheckBalance([FromServices] DataContext dbContext)
         {
-
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var userID = dbContext.Users.Where(_u => _u.Email == email).First().Id;
             var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == userID);
             if (user == null)
             {
@@ -60,11 +64,12 @@ namespace WebApp.Auth.Controllers
             return Results.Ok(new { Balance = wallet.Balance });
         }
 
-        [HttpPost("withdraw")]
-        public async Task<IResult> Withdraw(DepositModel depositModel, [FromServices] DataContext dbContext)
+        [HttpPost("withdraw"),Authorize]
+        public async Task<IResult> Withdraw([FromBody]float amount, [FromServices] DataContext dbContext)
         {
 
-            var userID = depositModel.UserId;
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var userID = dbContext.Users.Where(_u => _u.Email == email).First().Id;
 
             var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == userID);
             if (user == null)
