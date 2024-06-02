@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-function Login() {
+function Login({element}) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,6 +40,7 @@ function Login() {
         }).then(data => {
             console.log(data);
             if (data.ok) {
+                element(true);
                 setError("Login successful");
                 navigate('/');
             } else {
@@ -53,7 +54,7 @@ function Login() {
   }
 
   return (
-    <div className="container-fluid bg-light vh-100 d-flex justify-content-center align-items-center">
+    <div className="d-flex justify-content-center align-items-center">
       <div className="card p-4 shadow">
         <h1 className="text-center mb-3">Login</h1>
         <form>

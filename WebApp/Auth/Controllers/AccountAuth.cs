@@ -3,6 +3,8 @@ using WebApp.Auth.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Auth.Controllers
 {
@@ -69,6 +71,27 @@ namespace WebApp.Auth.Controllers
 
             return Results.Ok(new { Message = "Register successful" });
 
+        }
+
+        [HttpGet("checkLogIn"),Authorize]
+        public async Task<IResult> isLoggedIn()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            return Results.Ok(new { Email = email });
+        }
+
+        [HttpGet("getUserInfo"),Authorize]
+        public async Task<IResult> getUserInfo(DataContext dbContext)
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var id = dbContext.Users.Where(_u => _u.Email == email).First().Id;
+            var user = dbContext.UsersList.Include(c => c.ApplicationUser).FirstOrDefault(c => c.ApplicationUser.Id == id);
+            if(user == null)
+            {
+                return Results.BadRequest(new { Message = "Error" });
+            }
+
+            return Results.Ok(new {PhoneNumber = user.PhoneNumber,BirthDay = user.BirthDate, Email = user.ApplicationUser.Email, UserName = user.ApplicationUser.UserName});
         }
     }
 }
