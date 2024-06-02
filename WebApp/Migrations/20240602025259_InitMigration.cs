@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -196,6 +196,27 @@ namespace WebApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BetsList",
+                columns: table => new
+                {
+                    BetID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AmountPlaced = table.Column<float>(type: "real", nullable: false),
+                    FixtureID = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BetsList", x => x.BetID);
+                    table.ForeignKey(
+                        name: "FK_BetsList_UsersList_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UsersList",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -236,6 +257,11 @@ namespace WebApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BetsList_UserId",
+                table: "BetsList",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UsersList_WalletId",
                 table: "UsersList",
                 column: "WalletId");
@@ -260,10 +286,13 @@ namespace WebApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "UsersList");
+                name: "BetsList");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "UsersList");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

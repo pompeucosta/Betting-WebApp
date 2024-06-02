@@ -68,6 +68,14 @@ export default defineConfig({
                 secure: false
             },
             '^/getUserInfo': {
+              target,
+                secure: false
+            },
+            '^/getBets': {
+                target,
+                secure: false
+            },
+            '^/createBet': {
                 target,
                 secure: false
             }
