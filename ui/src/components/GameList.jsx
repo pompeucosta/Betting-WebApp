@@ -3,7 +3,7 @@ import GameCard from './GameCard';
 
 
 
-const GameList = ({ onBetSelected }) => {
+const GameList = ({ onBetSelected, bets }) => {
 
     const [games, setGames] = useState([]);
  
@@ -35,7 +35,7 @@ const GameList = ({ onBetSelected }) => {
         <div className='gameList'>
             {Object.keys(games).length > 0 ? (
                 Object.values(games).map((game, index) => (
-                    <GameCard key={index} game={game} handleClick={handleClick} />
+                    <GameCard key={index} game={game} handleClick={handleClick} bets={bets} />
                 ))
             ) : (
                 <p>No games available.</p>

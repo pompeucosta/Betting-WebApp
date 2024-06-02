@@ -27,7 +27,7 @@ function Home() {
     return (
         <div>
             <Sidenav />
-            <GameList onBetSelected={onBetSelected} />
+            <GameList onBetSelected={onBetSelected} bets={bets} />
             <BetPreview bets={bets} onBetRemoved={onBetRemoved} onBetCheckout={onBetCheckout} updateBetAmount={UpdateBetAmount} />
         </div>
     )
