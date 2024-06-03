@@ -34,7 +34,11 @@ namespace WebApp.LiveEventUpdates.Controllers
                 return Results.NotFound(new { Message = "Fixture not found"});
             }
 
-            var wallet = user.Wallet;
+            var wallet = dbContext.WalletsList.SingleOrDefault(w => w.WalletId == user.WalletID);
+            if (wallet == null)
+            {
+                return Results.NotFound(new { Message = "Wallet not found"});
+            }
 
             var withdrawalResult = wallet.Withdraw(createBetModel.AmountPlaced);
 
