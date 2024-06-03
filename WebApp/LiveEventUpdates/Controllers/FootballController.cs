@@ -1,6 +1,7 @@
 ﻿using WebApp.LiveEventUpdates.Models.Football;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Data;
+using WebApp.BettingTrans.Models;
 
 namespace WebApp.LiveEventUpdates.Controllers
 {
@@ -9,6 +10,7 @@ namespace WebApp.LiveEventUpdates.Controllers
     public class FootballController : ControllerBase
     {
         static FootballService footballService = new FootballService();
+        static BetService betService = new BetService();
 
         [HttpGet("getLiveData")]
         public async Task<IResult> GetLiveData()
@@ -34,10 +36,11 @@ namespace WebApp.LiveEventUpdates.Controllers
         }
 
         [HttpPost("simulateDummyData")]
-        public async Task<IResult> SimulateDummyData(bool state)
+        public async Task<IResult> SimulateDummyData(bool state,DataContext dbContext)
         {
             footballService.state = state;
-            return Results.Ok(new { });
+            betService.UpdateBetData(dbContext,footballService);
+            return Results.Ok(new { Message = "Data state successfully changed" });
         }
     }
 }

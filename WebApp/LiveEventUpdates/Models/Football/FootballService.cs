@@ -88,18 +88,18 @@ namespace WebApp.LiveEventUpdates.Models.Football
                 {
                     AwayGoals = 2,
                     HomeGoals = 32,
-                    Status = "First Half",
+                    Status = "Second Half",
                     Teams = [new Team { LogoURL = "url", Name = "benfica" }, new Team { LogoURL = "url2", Name = "porto" }],
-                    TimeElapsed = 32,
+                    TimeElapsed = 48,
                     FixtureID = 1
                 },
                 new FootballData
                 {
                     AwayGoals = 22,
                     HomeGoals = 24,
-                    Status = "Second Half",
+                    Status = "Finished",
                     Teams = [new Team { LogoURL = "u", Name = "boavista" }, new Team { LogoURL = "u2", Name = "ronaldo" }],
-                    TimeElapsed = 87,
+                    TimeElapsed = 90,
                     FixtureID = 2
                 },
             ];
