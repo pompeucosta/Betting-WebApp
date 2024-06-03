@@ -17,7 +17,7 @@ namespace WebApp.LiveEventUpdates.Controllers
         FootballService footballService = new FootballService();
 
         [HttpPost("createBet"),Authorize]
-        public async Task<IResult> CreateBet([FromBody] CreateBetModel createBetModel, [FromServices] DataContext dbContext)
+        public async Task<IResult> CreateBet(CreateBetModel createBetModel, DataContext dbContext)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
             var id = dbContext.Users.Where(_u => _u.Email == email).First().Id;
@@ -67,7 +67,7 @@ namespace WebApp.LiveEventUpdates.Controllers
         }
 
         [HttpGet("getBets"),Authorize]
-        public async Task<IActionResult> GetBets([FromServices] DataContext dbContext)
+        public async Task<IActionResult> GetBets(DataContext dbContext)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
             var userID = dbContext.Users.Where(_u => _u.Email == email).First().Id;

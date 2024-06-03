@@ -18,7 +18,7 @@ namespace WebApp.Auth.Controllers
         }
 
         [HttpPost("deposit"),Authorize]
-        public async Task<IResult> Deposit(float amount, [FromServices] DataContext dbContext)
+        public async Task<IResult> Deposit(float amount, DataContext dbContext)
         {
             using var myActivity = OpenTelemetryData.MyActivitySource.StartActivity("deposit");
             var email = User.FindFirstValue(ClaimTypes.Email);
@@ -55,7 +55,7 @@ namespace WebApp.Auth.Controllers
         }
 
         [HttpGet("checkBalance"),Authorize]
-        public async Task<IResult> CheckBalance([FromServices] DataContext dbContext)
+        public async Task<IResult> CheckBalance(DataContext dbContext)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
             var userID = dbContext.Users.Where(_u => _u.Email == email).First().Id;
@@ -76,7 +76,7 @@ namespace WebApp.Auth.Controllers
         }
 
         [HttpPost("withdraw"),Authorize]
-        public async Task<IResult> Withdraw(float amount, [FromServices] DataContext dbContext)
+        public async Task<IResult> Withdraw(float amount, DataContext dbContext)
         {
             using var myActivity = OpenTelemetryData.MyActivitySource.StartActivity("withdrawal");
             var email = User.FindFirstValue(ClaimTypes.Email);
