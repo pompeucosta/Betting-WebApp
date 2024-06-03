@@ -8,6 +8,12 @@ function Home() {
     const [bets, setBets] = useState([])
     const navigate = useNavigate()
 
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const onSearchTermChange = (newSearchTerm) => {
+        setSearchTerm(newSearchTerm);
+    }
+
     const onBetSelected = (bet) => {
         setBets([...bets, bet])
     }
@@ -26,8 +32,8 @@ function Home() {
 
     return (
         <div>
-            <Sidenav />
-            <GameList onBetSelected={onBetSelected} bets={bets} />
+            <Sidenav searchTerm={searchTerm} onSearchTermChange={onSearchTermChange} />
+            <GameList onBetSelected={onBetSelected} bets={bets} search={searchTerm} />
             <BetPreview bets={bets} onBetRemoved={onBetRemoved} onBetCheckout={onBetCheckout} updateBetAmount={UpdateBetAmount} />
         </div>
     )

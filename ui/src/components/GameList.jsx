@@ -3,10 +3,9 @@ import GameCard from './GameCard';
 
 
 
-const GameList = ({ onBetSelected, bets }) => {
+const GameList = ({ onBetSelected, bets, search }) => {
 
     const [games, setGames] = useState([]);
- 
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -31,10 +30,14 @@ const GameList = ({ onBetSelected, bets }) => {
         onBetSelected(bet)
     }
 
+    const filteredGames = games.filter(game => 
+        `${game.teams[0].name} vs ${game.teams[1].name}`.toLowerCase().includes(search.toLowerCase())
+    );
+
     return (
         <div className='gameList'>
-            {Object.keys(games).length > 0 ? (
-                Object.values(games).map((game, index) => (
+            {Object.keys(filteredGames).length > 0 ? (
+                Object.values(filteredGames).map((game, index) => (
                     <GameCard key={index} game={game} handleClick={handleClick} bets={bets} />
                 ))
             ) : (
