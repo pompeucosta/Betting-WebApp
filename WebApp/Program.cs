@@ -1,6 +1,10 @@
 using WebApp.Data;
 using WebApp.Auth.Models;
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +30,35 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
 }
 ).AddEntityFrameworkStores<DataContext>();
 
+builder.Logging.AddOpenTelemetry(x =>
+{
+    x.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(OpenTelemetryData.ServiceName))
+    .AddOtlpExporter(options =>
+    {
+        options.Endpoint = new Uri(EnvVariables.LogsExportEndpoint);
+    });
+});
+
+builder.Services.AddOpenTelemetry()
+    .WithMetrics(x =>
+    {
+        x.AddRuntimeInstrumentation()
+        .AddPrometheusExporter()
+        .AddMeter(OpenTelemetryData.AuthMeterName)
+        .AddMeter(OpenTelemetryData.WalletMeterName);
+    })
+    .WithTracing(x =>
+    {
+        x.AddSource(OpenTelemetryData.ServiceName)
+        .ConfigureResource(resource => resource.AddService(OpenTelemetryData.ServiceName, serviceVersion: OpenTelemetryData.ServiceVersion))
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddOtlpExporter( options =>
+        {
+            options.Endpoint = new Uri(EnvVariables.TracesExportEndpoint);
+        });
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,10 +74,10 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapFallbackToFile("/index.html");
 app.Run();

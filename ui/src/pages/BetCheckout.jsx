@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
-import { json, useLocation } from 'react-router-dom';
+import { json, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Form, FormGroup, Card } from 'react-bootstrap';
 import withAuthCheck from '../components/withAuthCheck';
 
 const BetCheckout = () => {
     const location = useLocation();
     const [bets, setBets] = useState(location.state.bets);
-
-    const [formData, setFormData] = useState({
-        paymentMethod: ''
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
         let userId = "";
         // retrieve userId from /checkLogIn
         try {
@@ -40,13 +31,29 @@ const BetCheckout = () => {
             console.log(bet.game);
             let betInfo = {};
             betInfo = {
-                userId: userId,
+                betValue: bet.betValue,
                 amountPlaced: bet.amount,
-                fixtureId: bet.game.fixtureID,
-                prediction: bet.team,
+                fixtureId: bet.game.fixtureID
             }
-            console.log(betInfo);
-            // TODO: send to server
+            
+            try {
+                const response = await fetch('/createBet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(betInfo)
+                });
+                if (response.status === 200) {
+                    console.log('Bet placed successfully');
+                    navigate('/profile');
+                    window.location.reload();
+                } else {
+                    console.error('Failed to place bet');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     }
 
@@ -86,20 +93,6 @@ const BetCheckout = () => {
             <Form onSubmit={handleSubmit} className="checkout-form">
                 <h1>Checkout</h1>
                 <h3>Total: {bets.reduce((acc, bet) => acc + parseFloat(bet.amount), 0).toFixed(2)}€</h3>
-                <FormGroup>
-                <Form.Label>Payment Method</Form.Label>
-                <Form.Select
-                    id="paymentMethod"
-                    name="paymentMethod"
-                    value={formData.paymentMethod}
-                    onChange={handleChange}
-                >
-                    <option value="">Select a payment method</option>
-                    <option value="creditCard">Credit Card</option>
-                    <option value="debitCard">Debit Card</option>
-                    <option value="wallet">Wallet</option>
-                </Form.Select>
-            </FormGroup>
                 <Button type="submit">Place Bet</Button>
             </Form>
         </div>
