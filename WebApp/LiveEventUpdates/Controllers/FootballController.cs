@@ -36,7 +36,7 @@ namespace WebApp.LiveEventUpdates.Controllers
         }
 
         [HttpPost("simulateDummyData")]
-        public async Task<IResult> SimulateDummyData(bool state,DataContext dbContext)
+        public async Task<IResult> SimulateDummyData(bool state,DataContext dbContext,ILogger<FootballController> logger)
         {
             if (state == FootballService.state)
             {
@@ -44,6 +44,7 @@ namespace WebApp.LiveEventUpdates.Controllers
             }
             FootballService.state = state;
             betService.UpdateBetData(dbContext,footballService);
+            await MQTT.PublishMessageAsync(logger, EnvVariables.BrokerAddress, "live-update", $"{state}");
             return Results.Ok(new { Message = "Data state successfully changed" });
         }
     }
