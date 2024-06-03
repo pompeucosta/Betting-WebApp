@@ -1,0 +1,22 @@
+
+register-button {
+    background-color: #D9533F;
+    border: none;
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-button:hover {
+    background-color: #D9533F; 
+  }
+
+  .container-fluid {
+    margin-top: 140px;
+    margin-bottom: 30px;
+}
+

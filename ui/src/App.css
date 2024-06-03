@@ -1,0 +1,146 @@
+body, html, #root, .App {
+  min-height: 100vh;
+  min-width: 100vw;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.navbar {
+  background-color: #d32f2f;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.sidenav {
+  width: 20%;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+}
+
+.betPreview {
+  width: 40%;
+  background: #fff;
+  position: absolute;
+  right: 0;
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+  height: 80%
+}
+
+.betPreviewBody {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.gameList {
+  flex: 1;
+  position: absolute;
+  margin-left: 20%;
+  margin-right: 30%;
+  box-sizing: border-box;
+}
+
+.gameCard {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.gameCardContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.oddsButton {
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  width: 6.25rem;
+}
+
+.oddsButton p {
+  margin-bottom: 0;
+}
+
+.footer {
+  background-color: #d32f2f;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+  height: 4rem;
+  box-sizing: border-box;
+  margin-top: auto;
+}
+
+.bet-checkout {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.bets-info {
+  flex: 1;
+  margin-right: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+
+.checkout-form {
+  flex: 1;
+}
+
+@media (max-width: 1200px) {
+  .sidenav {
+    display: none;
+  }
+
+  .gameList {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+  .betPreview {
+    position: static;
+    width: 100%;
+    height: auto;
+    display: block;
+  }  
+}

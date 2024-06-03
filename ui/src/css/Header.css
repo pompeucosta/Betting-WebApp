@@ -1,0 +1,18 @@
+
+.walletIcon {
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.walletIconPlus {
+    font-size: 16px;
+    color: rgb(196, 31, 31);
+    font-weight: bolder;
+}
