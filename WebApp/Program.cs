@@ -6,25 +6,9 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
-var logsLocation = Environment.GetEnvironmentVariable(EnvVariables.LogsEnvVariableName);
-if(logsLocation != null)
-    EnvVariables.LogsExportEndpoint = logsLocation;
-
-var tracesLocation = Environment.GetEnvironmentVariable(EnvVariables.TracesEnvVariableName);
-if (tracesLocation != null)
-    EnvVariables.TracesExportEndpoint = tracesLocation;
-
-var brokerAddr = Environment.GetEnvironmentVariable(EnvVariables.BrokerEnvVariableName);
-if (brokerAddr != null)
-    EnvVariables.BrokerAddress = brokerAddr;
-
 var builder = WebApplication.CreateBuilder(args);
 
-var dbAddr = Environment.GetEnvironmentVariable(EnvVariables.DbEnvVariableName);
-if (dbAddr != null)
-    EnvVariables.DbAddress = dbAddr;
-else
-    EnvVariables.DbAddress = builder.Configuration.GetConnectionString("DbConnection");
+EnvVariables.DbAddress = Environment.GetEnvironmentVariable("DATABASE_ADDRESS") ?? builder.Configuration.GetConnectionString("DbConnection") ?? throw new Exception("Please provide a database connection address");
 
 // Add services to the container.
 builder.Services.AddControllers();

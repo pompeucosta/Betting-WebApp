@@ -2,13 +2,9 @@
 {
     public static class EnvVariables
     {
-        public static string LogsEnvVariableName { get; } = "LOGS_EXPORT_ENDPOINT";
-        public static string LogsExportEndpoint { get; set; } = "http://localhost:3100";
-        public static string TracesEnvVariableName { get; } = "TRACES_EXPORT_ENDPOINT";
-        public static string TracesExportEndpoint { get; set; } = "http://localhost:4317";
-        public static string BrokerEnvVariableName { get; } = "MQTT_ADDRESS";
-        public static string BrokerAddress { get; set; } = "localhost";
-        public static string DbEnvVariableName { get; } = "DATABASE_ADDRESS";
-        public static string DbAddress { get; set; } = "";
+        public static string LogsExportEndpoint { get; set; } = Environment.GetEnvironmentVariable("LOGS_EXPORT_ENDPOINT") ?? "http://localhost:3100";
+        public static string TracesExportEndpoint { get; set; } = Environment.GetEnvironmentVariable("TRACES_EXPORT_ENDPOINT") ?? "http://localhost:4317";
+        public static string BrokerAddress { get; set; } = Environment.GetEnvironmentVariable("MQTT_ADDRESS") ?? "localhost";
+        public static string DbAddress { get; set; } = Environment.GetEnvironmentVariable("DATABASE_ADDRESS") ?? "";
     }
 }
