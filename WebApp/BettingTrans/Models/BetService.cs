@@ -2,13 +2,12 @@
 using System.Globalization;
 using WebApp.Data;
 using WebApp.LiveEventUpdates.Models.Football;
-using WebApp.LiveEventUpdates.Models.Football.Odds;
 
 namespace WebApp.BettingTrans.Models
 {
     public class BetService
     {
-        public async Task UpdateBetData(DataContext dbContext, FootballService footballService)
+        public void UpdateBetData(DataContext dbContext, FootballService footballService)
         {
             var gameData = footballService.GetLiveSportData().Result;
             var odds = footballService.GetLiveEventOdds().Result;

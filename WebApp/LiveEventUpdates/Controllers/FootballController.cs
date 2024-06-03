@@ -38,11 +38,11 @@ namespace WebApp.LiveEventUpdates.Controllers
         [HttpPost("simulateDummyData")]
         public async Task<IResult> SimulateDummyData(bool state,DataContext dbContext)
         {
-            if (state == footballService.state)
+            if (state == FootballService.state)
             {
                 return Results.BadRequest(new { Message = "Data state remained the same"});
             }
-            footballService.state = state;
+            FootballService.state = state;
             betService.UpdateBetData(dbContext,footballService);
             return Results.Ok(new { Message = "Data state successfully changed" });
         }

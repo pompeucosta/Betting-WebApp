@@ -6,7 +6,7 @@ namespace WebApp.LiveEventUpdates.Models.Football
 {
     public class FootballService
     {
-        public bool state;
+        public static bool state { get; set; }
         public async Task<IEnumerable<FootballData>> GetLiveSportData()
         {
             return await RequestLiveDataAsync();

@@ -46,7 +46,24 @@ namespace WebApp.LiveEventUpdates.Controllers
             {
                 return Results.BadRequest(new { Message = "Not enough funds" });
             }
-            
+
+            var gamesData = footballService.GetLiveSportData();
+            if (gamesData == null)
+            {
+                return Results.NotFound(new { Message = "No game found with that fixtureID"});
+            }
+
+            foreach (var game in gamesData.Result)
+            {
+                if (game.FixtureID == createBetModel.FixtureID)
+                {
+                    if (game.Status == "Finished")
+                    {
+                        return Results.BadRequest(new { Message = "Cannot create a bet for a game that has already finished"});
+                    }
+                    break;
+                }
+            }
             try
             {
                 var bet = new Bet
