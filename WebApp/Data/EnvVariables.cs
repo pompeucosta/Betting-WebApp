@@ -7,7 +7,7 @@
         public static string TracesEnvVariableName { get; } = "TRACES_EXPORT_ENDPOINT";
         public static string TracesExportEndpoint { get; set; } = "http://localhost:4317";
         public static string BrokerEnvVariableName { get; } = "MQTT_ADDRESS";
-        public static string BrokerAddress { get; set; } = "http://localhost:9001";
+        public static string BrokerAddress { get; set; } = "localhost";
         public static string DbEnvVariableName { get; } = "DATABASE_ADDRESS";
         public static string DbAddress { get; set; } = "";
     }

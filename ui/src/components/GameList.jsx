@@ -34,9 +34,12 @@ const GameList = ({ onBetSelected, bets, search }) => {
         console.log(client)
 
         client.on('connect', () => {
+            console.log('Connected to MQTT broker');
             client.subscribe(live_update_topic, (err) => {
                 if (err) {
                     console.error('Failed to subscribe to topic:', err);
+                } else {
+                    console.log('Subscribed to topic:', live_update_topic);
                 }
             });
         });
@@ -45,6 +48,14 @@ const GameList = ({ onBetSelected, bets, search }) => {
             if (topic === live_update_topic) {
                 fetchGames();
             }
+        });
+
+        client.on('error', (error) => {
+            console.error('Failed to connect to MQTT broker:', error);
+        });
+
+        client.on('close', () => {
+            console.log('Connection closed');
         });
 
         // Disconnect the client when the component is unmounted
