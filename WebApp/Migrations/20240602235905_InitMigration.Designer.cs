@@ -12,8 +12,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240602221444_FixWallet2")]
-    partial class FixWallet2
+    [Migration("20240602235905_InitMigration")]
+    partial class InitMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -275,6 +275,10 @@ namespace WebApp.Migrations
 
                     b.Property<float>("AmountPlaced")
                         .HasColumnType("real");
+
+                    b.Property<string>("BetValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FixtureID")
                         .HasColumnType("int");

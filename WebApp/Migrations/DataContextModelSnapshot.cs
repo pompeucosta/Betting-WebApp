@@ -273,6 +273,10 @@ namespace WebApp.Migrations
                     b.Property<float>("AmountPlaced")
                         .HasColumnType("real");
 
+                    b.Property<string>("BetValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("FixtureID")
                         .HasColumnType("int");
 

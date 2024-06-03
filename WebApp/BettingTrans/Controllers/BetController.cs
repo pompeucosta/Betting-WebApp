@@ -14,6 +14,8 @@ namespace WebApp.LiveEventUpdates.Controllers
     [ApiController]
     public class BetController : ControllerBase
     {
+        FootballService footballService = new FootballService();
+
         [HttpPost("createBet"),Authorize]
         public async Task<IResult> CreateBet([FromBody] CreateBetModel createBetModel, [FromServices] DataContext dbContext)
         {
@@ -23,7 +25,13 @@ namespace WebApp.LiveEventUpdates.Controllers
 
             if (user == null)
             {
-                return Results.BadRequest(new { Message = "UserID does not exist" });
+                return Results.NotFound(new { Message = "User not found" });
+            }
+
+            var fixtureExists = await footballService.CheckFixtureExists(createBetModel.FixtureID);
+            if (!fixtureExists)
+            {
+                return Results.NotFound(new { Message = "Fixture not found"});
             }
 
             var wallet = user.Wallet;
@@ -39,6 +47,7 @@ namespace WebApp.LiveEventUpdates.Controllers
             {
                 var bet = new Bet
                 {
+                    BetValue = createBetModel.BetValue,
                     FixtureID = createBetModel.FixtureID,
                     AmountPlaced = createBetModel.AmountPlaced,
                     User = user,
@@ -62,10 +71,19 @@ namespace WebApp.LiveEventUpdates.Controllers
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
             var userID = dbContext.Users.Where(_u => _u.Email == email).First().Id;
-            
+
             var bets = dbContext.BetsList
                 .Where(b => b.UserID == userID)
-                .Select(b => new { UserID = b.UserID, BetID = b.BetID, FixtureID = b.FixtureID, AmountPlaced = b.AmountPlaced });
+                .Select(b => new 
+                { 
+                    UserID = b.UserID,
+                    BetID = b.BetID,
+                    BetValue = b.BetValue,
+                    FixtureID = b.FixtureID,
+                    AmountPlaced = b.AmountPlaced,
+                    GameData = footballService.GetFootballDataByFixtureID(b.FixtureID),
+                    OddsData = footballService.GetFootballOddsByFixtureID(b.FixtureID),
+                });
             if (bets == null)
             {
                 return BadRequest(new { Message = "UserID does not have any bets associated" });

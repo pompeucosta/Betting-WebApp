@@ -9,6 +9,7 @@ namespace WebApp.BettingTrans.Models
         [Key]
         public int BetID { get; set; }
         public float AmountPlaced { get; set; }
+        public string BetValue {  get; set; }
         public int FixtureID { get; set; }
 
         [ForeignKey("UserID")]

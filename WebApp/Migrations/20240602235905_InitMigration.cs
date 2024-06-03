@@ -203,6 +203,7 @@ namespace WebApp.Migrations
                     BetID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AmountPlaced = table.Column<float>(type: "real", nullable: false),
+                    BetValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FixtureID = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
