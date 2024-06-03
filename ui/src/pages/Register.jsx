@@ -5,6 +5,7 @@ import '../css/Register.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 function Register (){
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -13,6 +14,7 @@ function Register (){
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState(null);
+    
     const navigate = useNavigate();
 
 
@@ -27,39 +29,34 @@ function Register (){
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-
-       
+        event.preventDefault();      
+        
         if (!fullName || !phoneNumber || !email || !password || !confirmPassword) {
-            console.log(fullName, phoneNumber, email, password, confirmPassword);
-            setError('Please fill in all fields');
+            alert('Please fill in all fields');
             return;
         }
-        console.log("Email: ", email);
+
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            setError("Please enter a valid email address");
+            console.log("ehehehe");
+            alert('Please enter a valid email address');
             return;
         } else if (!/^\d{9}$/.test(phoneNumber)) {
-            setError("Please enter a valid phone number");
+            alert('Please enter a valid phone number');
             return;
         }
 
         if (password !== confirmPassword) {
-            setError("Passwords do not match");
+            alert('Passwords do not match');
             return;
-        }
+        }  
 
         const [year, month, day] = dateOfBirth.split('-').map(Number);
 
-        console.log("Registering");
-        console.log(fullName, email, password, dateOfBirth, year, month, day);
-        console.log(JSON.stringify({
-            Name: fullName,
-            Email: email,
-            Password: password,
-            BirthDate: {year: year, month: month, day: day},
-            PhoneNumber: phoneNumber
-        }));
+        if (year < 1900 || year > new Date().getFullYear() || month < 1 || month > 12 || day < 1 || day > 31) {
+            alert('Please enter a valid date of birth');
+            return;
+        }
+
         fetch('/register', {
             method: 'POST',
             headers: {
@@ -74,10 +71,10 @@ function Register (){
             }),
         }).then(data => {
             if (data.ok) {
-                setError("Registration successful");
                 navigate('/');
             } else {
-                setError(data.message || "Registration failed");
+                alert('Registration failed');
+                //setError(data.message || "Registration failed");
             }
         }).catch(error => {
             console.error('Error:', error);
