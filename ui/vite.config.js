@@ -78,6 +78,18 @@ export default defineConfig({
             '^/createBet': {
                 target,
                 secure: false
+            },
+            '^/deposit': {
+                target,
+                secure: false
+            },
+            '^/withdraw': {
+                target,
+                secure: false
+            },
+            '^/checkBalance': {
+                target,
+                secure: false
             }
         },
         port: 5173,
