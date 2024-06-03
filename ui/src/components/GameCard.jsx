@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 
-const GameCard = ({ game, handleClick }) => {
+const GameCard = ({ game, handleClick, bets }) => {
     const [odds, setOdds] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -29,6 +29,10 @@ const GameCard = ({ game, handleClick }) => {
         getOdds(game.fixtureID);
     }, [game.fixtureID]);
 
+    const isBetPlaced = (team) => {
+        return bets.some((bet) => bet.game.fixtureID === game.fixtureID && bet.team === team);
+    }
+
     return (
         <Card className='gameCard'>
             <Card.Body>
@@ -43,17 +47,19 @@ const GameCard = ({ game, handleClick }) => {
                         <p>{error}</p>
                     ) : (
                         <div className='d-flex justify-content-center gap-3'>
-                            <Button className='oddsButton' variant="warning" onClick={() => 
+                            <Button className='oddsButton' variant={isBetPlaced(game.teams[0].name) ? "dark" : "warning"} disabled={isBetPlaced(game.teams[0].name)} onClick={() => 
                                 handleClick({id: generateId(), game: game, team: game.teams[0].name, odds: odds[0].values[0].odd, amount: 0.0})}>
                                 <p>{game.teams[0].name}</p>
                                 {odds[0].values[0].odd}
                             </Button>
-                            <Button className='oddsButton mx-2' variant="warning" onClick={() => 
+
+                            <Button className='oddsButton mx-2' variant={isBetPlaced('Draw') ? "dark" : "warning"} disabled={isBetPlaced('Draw')} onClick={() => 
                                 handleClick({id: generateId(), game: game, team: 'Draw', odds:  odds[0].values[1].odd, amount: 0.0})}>
                                 <p>Draw</p>
                                 {odds[0].values[1].odd}
                             </Button>
-                            <Button className='oddsButton' variant="warning" onClick={() => 
+
+                            <Button className='oddsButton' variant={isBetPlaced(game.teams[1].name) ? "dark" : "warning"} disabled={isBetPlaced(game.teams[1].name)} onClick={() => 
                                 handleClick({id: generateId(), game: game, team: game.teams[1].name, odds: odds[0].values[2].odd, amount: 0.0})}>
                                 <p>{game.teams[1].name}</p>
                                 {odds[0].values[2].odd}

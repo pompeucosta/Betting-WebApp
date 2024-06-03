@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Card, Button } from 'react-bootstrap'
-import BetCard from './BetCard'
 
 
 const BetPreview = ( { bets, onBetRemoved, onBetCheckout, updateBetAmount } ) => {
@@ -39,11 +38,42 @@ const BetPreview = ( { bets, onBetRemoved, onBetCheckout, updateBetAmount } ) =>
                 <div className="betPreviewBody">
                     <Card.Body>
                         {bets.length > 0 ? (
-                            bets.map((bet) => (
-                                <div key={bet.id}>
-                                    <BetCard bet={bet} handleRemoveBet={handleRemoveBet} onBetAmountChange={onBetAmountChange} />
-                                </div>  
-                            ))
+                            <table className="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Game</th>
+                                        <th>Prediction</th>
+                                        <th>Odd</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {bets.map((bet) => (
+                                        <tr key={bet.id}>
+                                            <td>
+                                                <Button variant="danger" onClick={() => handleRemoveBet(bet)} className="btn-sm">X</Button>
+                                            </td>
+                                            <td>{bet.game.teams[0].name} vs {bet.game.teams[1].name}</td>
+                                            <td>{bet.team}</td>
+                                            <td>{bet.odds}</td>
+                                            <td>
+                                                <div className="input-group">
+                                                    <input 
+                                                        type="number" 
+                                                        value={bet.amount} 
+                                                        onChange={(e) => onBetAmountChange(bet, e.target.value)} 
+                                                        className="form-control form-control-sm" 
+                                                    />
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">€</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         ) : (
                             <div>
                                 <p style={{ textAlign: 'center', marginTop: '170px' }}>
@@ -58,7 +88,7 @@ const BetPreview = ( { bets, onBetRemoved, onBetCheckout, updateBetAmount } ) =>
                 </div>
                 {bets.length > 0 && (
                     <Card.Footer>
-                        <h5>Possible Gains: {possibleGains}€</h5>
+                        <h5>Possible Gains: {possibleGains.toFixed(2)}€</h5>
                         <Button variant="danger" onClick={navigateToBetCheckout}>Place Bet</Button>
                     </Card.Footer>
                 )}
