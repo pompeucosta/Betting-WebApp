@@ -58,6 +58,38 @@ export default defineConfig({
             '^/getLiveData': {
                 target,
                 secure: false
+            },
+            '^/getLiveEventOdds': {
+                target,
+                secure: false
+            },
+            '^/checkLogIn':{
+                target,
+                secure: false
+            },
+            '^/getUserInfo': {
+              target,
+                secure: false
+            },
+            '^/getBets': {
+                target,
+                secure: false
+            },
+            '^/createBet': {
+                target,
+                secure: false
+            },
+            '^/deposit': {
+                target,
+                secure: false
+            },
+            '^/withdraw': {
+                target,
+                secure: false
+            },
+            '^/checkBalance': {
+                target,
+                secure: false
             }
         },
         port: 5173,

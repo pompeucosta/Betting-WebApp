@@ -48,9 +48,18 @@ function Register (){
             setError("Passwords do not match");
             return;
         }
+
+        const [year, month, day] = dateOfBirth.split('-').map(Number);
+
         console.log("Registering");
-        console.log(fullName, email, password);
-        
+        console.log(fullName, email, password, dateOfBirth, year, month, day);
+        console.log(JSON.stringify({
+            Name: fullName,
+            Email: email,
+            Password: password,
+            BirthDate: {year: year, month: month, day: day},
+            PhoneNumber: phoneNumber
+        }));
         fetch('/register', {
             method: 'POST',
             headers: {
@@ -59,7 +68,9 @@ function Register (){
             body: JSON.stringify({
                 Name: fullName,
                 Email: email,
-                Password: password
+                Password: password,
+                BirthDate: {year: year, month: month, day: day},
+                PhoneNumber: phoneNumber
             }),
         }).then(data => {
             if (data.ok) {
@@ -76,7 +87,7 @@ function Register (){
 
 
     return (
-        <div className="container-fluid bg-light vh-100 d-flex justify-content-center align-items-center" >
+        <div className="d-flex justify-content-center align-items-center" >
         <div className="card p-4 shadow w-50">
             <h1 className='text-center mb-3'>Register</h1>
             <Form>

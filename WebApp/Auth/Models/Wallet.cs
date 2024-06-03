@@ -6,10 +6,9 @@ namespace WebApp.Auth.Models
     {
         [Key]
         public int WalletId { get; set; }
-
-        public string Currency { get; set; } = string.Empty;
+        public string Currency { get; set; } = "Euro";
         public float Balance { get; set; } = 0f;
-        public List<string> transactions;
+        public ICollection<string> transactions = new List<string>();
 
         public void Deposit(float amount)
         {
@@ -17,7 +16,7 @@ namespace WebApp.Auth.Models
             transactions.Add($"Deposit: +{amount} {Currency}");
         }
 
-        public void Withdraw(float amount)
+        public bool Withdraw(float amount)
         {
             if (Balance >= amount)
             {
@@ -27,10 +26,12 @@ namespace WebApp.Auth.Models
             else
             {
                 Console.WriteLine("No funds");
+                return false;
             }
+            return true;
         }
 
-        public List<string> TransactionHistory()
+        public ICollection<string> TransactionHistory()
         {
             return transactions;
         }

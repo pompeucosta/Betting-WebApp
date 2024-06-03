@@ -3,7 +3,7 @@ import React from 'react';
 
 const Footer = () => {
     return (
-        <footer className='footer mt-5'>
+        <footer className='footer'>
             <p>&copy; NextGen SportsBet Inc.</p>
         </footer>
     )

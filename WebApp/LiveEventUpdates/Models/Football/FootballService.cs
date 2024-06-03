@@ -1,4 +1,6 @@
-﻿using WebApp.LiveEventUpdates.Models.Football.Odds;
+﻿using System.ComponentModel;
+using WebApp.BettingTrans.Models;
+using WebApp.LiveEventUpdates.Models.Football.Odds;
 
 namespace WebApp.LiveEventUpdates.Models.Football
 {
@@ -11,6 +13,45 @@ namespace WebApp.LiveEventUpdates.Models.Football
         public async Task<IEnumerable<FootballOdds>> GetLiveEventOdds()
         {
             return await RequestLiveOddsAsync();
+        }
+
+        public async Task<FootballData> GetFootballDataByFixtureID(int fixtureID)
+        {
+            var fixtures = await RequestLiveDataAsync();
+            foreach (var fixture in fixtures)
+            {
+                if (fixture.FixtureID == fixtureID)
+                {
+                    return fixture;
+                }
+            }
+            return null;
+        }
+
+        public async Task<FootballOdds> GetFootballOddsByFixtureID(int fixtureID)
+        {
+            var fixtures = await RequestLiveOddsAsync();
+            foreach (var fixture in fixtures)
+            {
+                if (fixture.FixtureID == fixtureID)
+                {
+                    return fixture;
+                }
+            }
+            return null;
+        }
+
+        public async Task<bool> CheckFixtureExists(int fixtureID)
+        {
+            var fixtures = await RequestLiveDataAsync();
+            foreach (var fixture in fixtures)
+            {
+                if (fixture.FixtureID == fixtureID)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         private async Task<IEnumerable<FootballData>> RequestLiveDataAsync() 
         {
@@ -48,19 +89,13 @@ namespace WebApp.LiveEventUpdates.Models.Football
                     Odds =
                     [
                         new Odd {
-                            id = 1, name = "Which team will score the 2nd goal?", values = 
+                            id = 1, name = "Match Winner", values = 
                             [
-                                new Value { value = "1",odd = "0",handicap = null,main = null,suspended = true},
-                                new Value { value = "No goal",odd = "0", handicap = null, main = null,suspended = true},
+                                new Value { value = "Home",odd = "2.43",handicap = null,main = null,suspended = false},
+                                new Value { value = "Draw",odd = "2.84", handicap = null, main = null,suspended = false},
+                                new Value { value = "Away",odd = "3.08", handicap = null, main = null,suspended = false},
                             ]
                         },
-                        new Odd {
-                            id = 10, name = "To Qualify", values =
-                            [
-                                new Value {value = "1", odd = "2.25",handicap = null,main = null,suspended = false},
-                                new Value {value = "2", odd = "1.571",handicap = null, main = null,suspended = false}
-                            ]
-                        }
                     ]
                 },
                 new FootballOdds
@@ -69,12 +104,13 @@ namespace WebApp.LiveEventUpdates.Models.Football
                     Odds =
                     [
                         new Odd {
-                            id = 90, name = "Which team will score the 3rd goal?", values =
+                            id = 1, name = "Match Winner", values =
                             [
-                                new Value {value = "1", odd = "0", handicap = null,main = null,suspended = true},
-                                new Value {value = "No goal", odd = "0", handicap = null, main = null, suspended = true}
+                                new Value { value = "Home",odd = "2.40",handicap = null,main = null,suspended = false},
+                                new Value { value = "Draw",odd = "2.9", handicap = null, main = null,suspended = false},
+                                new Value { value = "Away",odd = "3.0", handicap = null, main = null,suspended = false},
                             ]
-                        }
+                        },
                     ]
                 }
             ];

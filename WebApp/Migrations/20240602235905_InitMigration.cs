@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -177,7 +177,7 @@ namespace WebApp.Migrations
                     UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WalletId = table.Column<int>(type: "int", nullable: false)
+                    WalletID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,10 +189,32 @@ namespace WebApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UsersList_WalletsList_WalletId",
-                        column: x => x.WalletId,
+                        name: "FK_UsersList_WalletsList_WalletID",
+                        column: x => x.WalletID,
                         principalTable: "WalletsList",
                         principalColumn: "WalletId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BetsList",
+                columns: table => new
+                {
+                    BetID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AmountPlaced = table.Column<float>(type: "real", nullable: false),
+                    BetValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FixtureID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BetsList", x => x.BetID);
+                    table.ForeignKey(
+                        name: "FK_BetsList_UsersList_UserID",
+                        column: x => x.UserID,
+                        principalTable: "UsersList",
+                        principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -236,9 +258,14 @@ namespace WebApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsersList_WalletId",
+                name: "IX_BetsList_UserID",
+                table: "BetsList",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersList_WalletID",
                 table: "UsersList",
-                column: "WalletId");
+                column: "WalletID");
         }
 
         /// <inheritdoc />
@@ -260,10 +287,13 @@ namespace WebApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "UsersList");
+                name: "BetsList");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "UsersList");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
