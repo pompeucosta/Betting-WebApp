@@ -30,9 +30,6 @@ const GameList = ({ onBetSelected, bets, search }) => {
         // Connect to the MQTT broker and subscribe to live event updates
         const client = mqtt.connect(brokerUrl);
 
-        console.log('Connecting to MQTT broker:', brokerUrl);
-        console.log(client)
-
         client.on('connect', () => {
             console.log('Connected to MQTT broker');
             client.subscribe(live_update_topic, (err) => {
