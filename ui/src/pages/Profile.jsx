@@ -177,6 +177,7 @@ const Profile = () => {
                         <p><FaBaby style={{ color: 'grey' }} /><strong> Age:</strong> {calculateAge(userData.birthDay)}</p>
                         <p><FaCoins style={{ color: 'gold' }} /><strong> Balance available: </strong>{walletBalance} €</p>
                         <div className="Botoes">
+                            <button variant="danger" onClick={handleLogout}>Logout</button>
                             <button variant="secondary" onClick={handleShowWithdrawModal}>Withdraw</button>
                             <button variant="danger" onClick={handleShowDepositModal}>Deposit</button>
                         </div>
