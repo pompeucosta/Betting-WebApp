@@ -8,7 +8,7 @@ namespace WebApp.LiveEventUpdates.Controllers
     [ApiController]
     public class FootballController : ControllerBase
     {
-        FootballService footballService = new FootballService();
+        static FootballService footballService = new FootballService();
 
         [HttpGet("getLiveData")]
         public async Task<IResult> GetLiveData()
@@ -31,6 +31,13 @@ namespace WebApp.LiveEventUpdates.Controllers
             }
 
             return Results.BadRequest(new { Message = "Invalid FixtureID" });
+        }
+
+        [HttpPost("simulateDummyData")]
+        public async Task<IResult> SimulateDummyData(bool state)
+        {
+            footballService.state = state;
+            return Results.Ok(new { });
         }
     }
 }
