@@ -21,6 +21,7 @@ namespace WebApp.Auth.Controllers
         [HttpPost("login")]
         public async Task<IResult> Login(SignInManager<ApplicationUser> signInManager,UserManager<ApplicationUser> userManager, LoginModel loginModel)
         {
+            using var myActivity = OpenTelemetryData.MyActivitySource.StartActivity("login");
             var user = await userManager.FindByEmailAsync(loginModel.Email);
 
             if(user == null)
@@ -53,6 +54,7 @@ namespace WebApp.Auth.Controllers
         [HttpPost("register")]
         public async Task<IResult> Register(UserManager<ApplicationUser> userManager, UserRegisterModel user, DataContext dbContext)
         {
+            using var myActivity = OpenTelemetryData.MyActivitySource.StartActivity("register");
             var bDate = user.BirthDate;
             if (bDate.Year <= 0 || bDate.Month <= 0 || bDate.Day <= 0)
                 return Results.BadRequest(new { Message = "Invalid Birthday Date" });

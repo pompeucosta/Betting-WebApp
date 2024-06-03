@@ -44,7 +44,8 @@ builder.Services.AddOpenTelemetry()
     {
         x.AddRuntimeInstrumentation()
         .AddPrometheusExporter()
-        .AddMeter(OpenTelemetryData.MeterName);
+        .AddMeter(OpenTelemetryData.AuthMeterName)
+        .AddMeter(OpenTelemetryData.WalletMeterName);
     })
     .WithTracing(x =>
     {
