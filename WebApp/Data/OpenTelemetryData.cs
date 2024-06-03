@@ -12,6 +12,7 @@ namespace WebApp.Data
 
         public static readonly Counter<long> SuccessfulLoginsCounter = _meter.CreateCounter<long>("successful_logins");
         public static readonly Counter<long> FailedLoginsCounter = _meter.CreateCounter<long>("failed_logins");
+        public static readonly Counter<long> RegistrationsCounter = _meter.CreateCounter<long>("failed_logins");
         public static readonly ActivitySource MyActivitySource = new(ServiceName, ServiceVersion);
     }
 }

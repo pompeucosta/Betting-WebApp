@@ -10,6 +10,12 @@ namespace WebApp.Auth.Controllers
     [ApiController]
     public class AccountAuth : ControllerBase
     {
+        private ILogger<AccountAuth> logger;
+        public AccountAuth(ILogger<AccountAuth> _logger)
+        {
+            logger = _logger;
+        }
+
         [HttpPost("login")]
         public async Task<IResult> Login(SignInManager<ApplicationUser> signInManager,UserManager<ApplicationUser> userManager, LoginModel loginModel)
         {
@@ -24,10 +30,12 @@ namespace WebApp.Auth.Controllers
 
             if(result.Succeeded)
             {
+                OpenTelemetryData.SuccessfulLoginsCounter.Add(1);
                 return Results.Ok(new { Message = "Login successful" });
             }
             else
             {
+                OpenTelemetryData.FailedLoginsCounter.Add(1);
                 return Results.BadRequest(new { Message = "Email or Password are incorrect" });
             }
         }
@@ -63,10 +71,12 @@ namespace WebApp.Auth.Controllers
             }
             catch(Exception ex)
             {
+                logger.LogError($"Unable to create user account - {ex.Message}");
                 await userManager.DeleteAsync(identityUser);
                 return Results.BadRequest(new {Message =  ex.Message});
             }
 
+            OpenTelemetryData.RegistrationsCounter.Add(1);
             return Results.Ok(new { Message = "Register successful" });
 
         }
