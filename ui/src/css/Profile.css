@@ -1,40 +1,48 @@
 .profile-container {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    width:  70%;
+    padding: 20px;
+    width:  80%;
     margin: auto;
-    background-color: #f34c4c;
+    background-color: #e3dddd;
     box-sizing: border-box;
+    border-radius: 16px;
 }
 
 .profile-info{
     flex: 1;
-    margin-right: 20px;
+    margin-left:20px;
     padding: 20px;
     padding-left: 5%;
+    color: #333;
+}
+
+.Letters{
+    font-family: 'Arial', sans-serif;
 }
 
 
-.bet-history {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.bet-history {  
     padding: 20px;
-    background-color: #f34c4c;
     box-sizing: border-box;
 }
 
-button {
-    padding: 10px 20px;
-    background-color: #ec2626;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;    
+.Botoes {
+    display: flex;
+    gap: 10px; /* Espaçamento entre os botões */
 }
 
-button:hover {
-    background-color: #000000;
+.Botoes button {
+    border-radius: 12px;
+    size-adjust: 100px;
+}
+
+.Botoes button:nth-child(1) {
+    background-color: #ffffff; /* Cor de fundo do botão de retirada */
+    color: #000; /* Cor do texto do botão de retirada */
+}
+
+.Botoes button:nth-child(2) {
+    background-color: #ff0000; /* Cor de fundo do botão de depósito */
+    color: #fff; /* Cor do texto do botão de depósito */
 }

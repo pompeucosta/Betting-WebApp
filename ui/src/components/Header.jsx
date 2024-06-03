@@ -13,6 +13,7 @@ const Header = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const navigate = useNavigate();
+    const [userName, setUserName] = useState(null);
 
 
 
@@ -45,7 +46,6 @@ const Header = () => {
             return;
         }
     
-        // Envia uma solicitação POST para o endpoint /deposit
         fetch('/deposit?amount='+parseFloat(amount), {
             method: 'POST',
             headers: {
@@ -79,6 +79,22 @@ const Header = () => {
         navigate('/register');
     };
 
+    const fetchUserData = async () => {
+        try {
+            const response = await fetch('/getUserInfo');
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                setUserName(data.userName);
+            } else {
+               console.log('Failed to fetch user data');
+            }
+        } catch (error) {
+            console.log('Error:', error);
+        }
+    };
+
+
     useEffect(() => {
         // Check if user is logged in, endpoint should return 200 if logged in (/checkLogIn)
         fetch('/checkLogIn', {
@@ -88,6 +104,7 @@ const Header = () => {
             if (response.status === 200) {
                 setLoggedIn(true);
                 getWalletBalance();
+                fetchUserData();
             } else {
                 setLoggedIn(false);
             }
@@ -114,7 +131,7 @@ const Header = () => {
                             </span>
                             <span className="walletBalance">{walletBalance} €</span>
                         </Button>
-                        <Button variant="light" className="ms-2" onClick={handleProfileClick}>Profile</Button>
+                        <Button variant="light" className="ms-2" onClick={handleProfileClick}>{userName}</Button>
                         </>
                     ) : (
                         <>
@@ -127,12 +144,11 @@ const Header = () => {
         </Navbar>
       <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-          <Modal.Title>Add Money</Modal.Title>
+          <Modal.Title>Amount to deposit:</Modal.Title>
       </Modal.Header>
       <Modal.Body>
           <Form>
               <Form.Group controlId="formAmount">
-                  <Form.Label>Amount</Form.Label>
                   <Form.Control
                       type="number"
                       value={amount}
@@ -143,12 +159,9 @@ const Header = () => {
           </Form>
       </Modal.Body>
       <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-              Close
-          </Button>
-          <Button variant="primary" onClick={addMoneyWallet}>
+            <Button style={{backgroundColor:'#ff0000',border:'none'}} onClick={addMoneyWallet}>
               Add money
-        </Button>
+            </Button>
       </Modal.Footer>
   </Modal>
 </>
