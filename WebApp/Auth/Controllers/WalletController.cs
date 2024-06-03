@@ -13,7 +13,7 @@ namespace WebApp.Auth.Controllers
     public class BetController : ControllerBase
     {
         [HttpPost("deposit"),Authorize]
-        public async Task<IResult> Deposit([FromBody] float amount, [FromServices] DataContext dbContext)
+        public async Task<IResult> Deposit(float amount, [FromServices] DataContext dbContext)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
             var userID = dbContext.Users.Where(_u => _u.Email == email).First().Id;
@@ -65,7 +65,7 @@ namespace WebApp.Auth.Controllers
         }
 
         [HttpPost("withdraw"),Authorize]
-        public async Task<IResult> Withdraw([FromBody]float amount, [FromServices] DataContext dbContext)
+        public async Task<IResult> Withdraw(float amount, [FromServices] DataContext dbContext)
         {
 
             var email = User.FindFirstValue(ClaimTypes.Email);

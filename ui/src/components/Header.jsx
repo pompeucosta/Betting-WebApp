@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, Button } from 'react-bootstrap'
+import { Navbar, Nav, Button, Modal, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import '../css/Header.css';
@@ -8,37 +8,65 @@ import '../css/Header.css';
 const Header = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [walletBalance, setWalletBalance] = useState(0);
+    const [show, setShow] = useState(false);
+    const [amount, setAmount] = useState(0);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const navigate = useNavigate();
 
 
+
     const getWalletBalance = () => {
-        /*
-        // Get wallet balance
-        fetch('/wallet', {
+        fetch('/checkBalance', {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
-            .then((response) => {
-                if (response.status === 200) {
-                    response.json().then((data) => {
-                        setWalletBalance(data.balance);
-                    });
-                } else {
-                    console.error('Error:', response);
-                }
-            }).catch((error) => {
-                console.error('Error:', error);
-            });
-            */
+        .then((response) => {
+            if (response.status === 200) {
+                response.json().then((data) => {
+                    console.log(data.balance);
+                    setWalletBalance(data.balance);
+                });
+            } else {
+                console.error('Error:', response);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     };
+
 
     const addMoneyWallet = () => {
-        // Add money to wallet
-        // Criar um form para adicionar dinheiro à carteira
-
-        //setWalletBalance(walletBalane + ...);
-        console.log('Dinheiro adicionado à carteira!');
+        if (amount <= 0) {
+            console.error('Invalid amount');
+            return;
+        }
+    
+        // Envia uma solicitação POST para o endpoint /deposit
+        fetch('/deposit?amount='+parseFloat(amount), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            if (response.status === 200) {
+                getWalletBalance();
+                console.log('Dinheiro adicionado à carteira!');
+            } else {
+                console.error('Error:', response);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+        setShow(false);  
     };
     
+
     const handleProfileClick = () => {
         navigate('/profile');
     };
@@ -69,6 +97,7 @@ const Header = () => {
     }, []);
 
     return (
+        <>
         <Navbar variant='dark' expand="lg" className="navbar" fixed="top">
             <Navbar.Brand href="/" className='px-3'>NextGen SportsBet Inc.</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -79,7 +108,7 @@ const Header = () => {
                 <Nav className='px-3'>
                     {loggedIn ? (
                         <>                        
-                        <Button className="walletButton" style={{ backgroundColor: 'rgb(186, 43, 4)', color: 'white', border:'none' }} onClick={addMoneyWallet}>
+                        <Button className="walletButton" style={{ backgroundColor: 'rgb(186, 43, 4)', color: 'white', border:'none' }} onClick={handleShow}>
                             <span className="walletIcon">
                                 <span className="walletIconPlus">+</span>
                             </span>
@@ -96,7 +125,34 @@ const Header = () => {
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
-    )
-}
+      <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+          <Modal.Title>Add Money</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+          <Form>
+              <Form.Group controlId="formAmount">
+                  <Form.Label>Amount</Form.Label>
+                  <Form.Control
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder="Insert the quantity"
+                  />
+              </Form.Group>
+          </Form>
+      </Modal.Body>
+      <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+              Close
+          </Button>
+          <Button variant="primary" onClick={addMoneyWallet}>
+              Add money
+        </Button>
+      </Modal.Footer>
+  </Modal>
+</>
+);
+};
 
-export default Header
+export default Header;
