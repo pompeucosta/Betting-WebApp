@@ -232,12 +232,12 @@ namespace WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("WalletId")
+                    b.Property<int>("WalletID")
                         .HasColumnType("int");
 
                     b.HasKey("UserID");
 
-                    b.HasIndex("WalletId");
+                    b.HasIndex("WalletID");
 
                     b.ToTable("UsersList");
                 });
@@ -272,6 +272,10 @@ namespace WebApp.Migrations
 
                     b.Property<float>("AmountPlaced")
                         .HasColumnType("real");
+
+                    b.Property<string>("BetValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FixtureID")
                         .HasColumnType("int");
@@ -348,7 +352,7 @@ namespace WebApp.Migrations
 
                     b.HasOne("WebApp.Auth.Models.Wallet", "Wallet")
                         .WithMany()
-                        .HasForeignKey("WalletId")
+                        .HasForeignKey("WalletID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

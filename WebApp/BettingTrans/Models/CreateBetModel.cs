@@ -5,7 +5,7 @@ namespace WebApp.BettingTrans.Models
     public class CreateBetModel
     {
         [Required]
-        public string UserID { get; set; }
+        public string BetValue { get; set; }
         [Required]
         public float AmountPlaced { get; set; }
         [Required]

@@ -12,8 +12,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240602032338_FixedBet")]
-    partial class FixedBet
+    [Migration("20240602235905_InitMigration")]
+    partial class InitMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,12 +235,12 @@ namespace WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("WalletId")
+                    b.Property<int>("WalletID")
                         .HasColumnType("int");
 
                     b.HasKey("UserID");
 
-                    b.HasIndex("WalletId");
+                    b.HasIndex("WalletID");
 
                     b.ToTable("UsersList");
                 });
@@ -275,6 +275,10 @@ namespace WebApp.Migrations
 
                     b.Property<float>("AmountPlaced")
                         .HasColumnType("real");
+
+                    b.Property<string>("BetValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FixtureID")
                         .HasColumnType("int");
@@ -351,7 +355,7 @@ namespace WebApp.Migrations
 
                     b.HasOne("WebApp.Auth.Models.Wallet", "Wallet")
                         .WithMany()
-                        .HasForeignKey("WalletId")
+                        .HasForeignKey("WalletID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
