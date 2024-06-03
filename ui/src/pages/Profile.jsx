@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import withAuthCheck from '../components/withAuthCheck';
 import BetHistory from '../components/BetHistory';
+import {FaUser, FaEnvelope, FaCalendarAlt, FaPhone } from 'react-icons/fa'; // Importar ícones
+import '../css/Profile.css';
+
 
 const Profile = () => {
     const [userData, setUserData] = useState(null);
@@ -46,6 +49,19 @@ const Profile = () => {
         });
     };
 
+    const calculateAge = (birthdate) => {
+        const today = new Date();
+        const birthDate = new Date(birthdate);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age;
+    };
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -55,24 +71,27 @@ const Profile = () => {
     }
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>
-                <h2>User Profile</h2>
+        <div className="profile-container">
+            <div className="profile-info">
+                <h2 style={{ marginBottom: '25px' }}>User Profile</h2>
                 {userData && (
-                    <div>
-                        <p>Name: {userData.userName}</p>
-                        <p>Email: {userData.email}</p>
-                        <p>Date of Birth: {userData.birthDay}</p>
-                        <p>Phone Number: {userData.phoneNumber}</p>
+                    <div style={{ marginBottom: '10px' }}>
+                        <p><FaUser /><strong>Name:</strong> {userData.userName}</p>
+                        <p ><FaEnvelope /> <strong>Email:</strong> {userData.email}</p>
+                        <p><FaCalendarAlt /><strong>Date of Birth:</strong> {userData.birthDay}</p>
+                        <p><FaPhone /> <strong>Phone Number:</strong> {userData.phoneNumber}</p>
+                        <p><strong>Age:</strong> {calculateAge(userData.birthDay)}</p>
                     </div>
                 )}
                 <button onClick={handleLogout}>Logout</button>
             </div>
-            <div>
+            <div className="bet-history">
                 <BetHistory />
             </div>
         </div>
     );
 };
+
+
 
 export default withAuthCheck(Profile);

@@ -88,7 +88,7 @@ const BetPreview = ( { bets, onBetRemoved, onBetCheckout, updateBetAmount } ) =>
                 </div>
                 {bets.length > 0 && (
                     <Card.Footer>
-                        <h5>Possible Gains: {possibleGains}€</h5>
+                        <h5>Possible Gains: {possibleGains.toFixed(2)}€</h5>
                         <Button variant="danger" onClick={navigateToBetCheckout}>Place Bet</Button>
                     </Card.Footer>
                 )}

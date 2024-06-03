@@ -79,13 +79,13 @@ const BetCheckout = () => {
                         </Card.Body>
                     </div>
                     <Card.Footer>
-                        <h1>Possible Gains: {bets.reduce((acc, bet) => acc + parseFloat(bet.amount) * parseFloat(bet.odds), 0)}€</h1>
+                        <h1>Possible Gains: {bets.reduce((acc, bet) => acc + parseFloat(bet.amount) * parseFloat(bet.odds), 0).toFixed(2)}€</h1>
                     </Card.Footer>
                 </Card>
             </div>
             <Form onSubmit={handleSubmit} className="checkout-form">
                 <h1>Checkout</h1>
-                <h3>Total: {bets.reduce((acc, bet) => acc + parseFloat(bet.amount), 0)}€</h3>
+                <h3>Total: {bets.reduce((acc, bet) => acc + parseFloat(bet.amount), 0).toFixed(2)}€</h3>
                 <FormGroup>
                 <Form.Label>Payment Method</Form.Label>
                 <Form.Select
