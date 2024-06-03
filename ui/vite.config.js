@@ -90,10 +90,6 @@ export default defineConfig({
             '^/checkBalance': {
                 target,
                 secure: false
-            },
-            '^/simulateDummyData': {
-                target,
-                secure: false
             }
         },
         port: 5173,
