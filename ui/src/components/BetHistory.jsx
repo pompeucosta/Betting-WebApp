@@ -40,9 +40,9 @@ const BetHistory = () => {
     return (
         <div>
             <Card>
-                <Card.Header>
-                    <h2>Bet History</h2>
-                </Card.Header>
+            <Card.Header>
+                <h2 style={{ textAlign: 'center' }}>Bet History</h2>
+            </Card.Header>
                 <table className="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -76,6 +76,7 @@ const BetHistory = () => {
                             onClick={() => setCurrentPage((oldPage) => Math.max(oldPage - 1, 1))}
                             disabled={currentPage === 1}
                             className='btn btn-primary'
+                            style={{ backgroundColor: 'red', color: 'white', border: 'black' }}
                         >
                             {"<"}
                         </button>
@@ -84,6 +85,7 @@ const BetHistory = () => {
                             onClick={() => setCurrentPage((oldPage) => Math.min(oldPage + 1, pageNumbers.length))}
                             disabled={currentPage === pageNumbers.length}
                             className='btn btn-primary'
+                            style={{ backgroundColor: 'red', color: 'white', border: 'black'}}
                         >
                             {">"}
                         </button>
