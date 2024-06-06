@@ -41,7 +41,7 @@ const BetHistory = () => {
         <div>
             <Card>
             <Card.Header>
-                <h2 style={{ textAlign: 'center' }}>Bet History</h2>
+                <h2 style={{ textAlign: 'center' }}>Bets</h2>
             </Card.Header>
                 <table className="table table-striped table-bordered">
                     <thead>
