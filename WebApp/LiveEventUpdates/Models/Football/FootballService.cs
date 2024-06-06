@@ -76,7 +76,7 @@ namespace WebApp.LiveEventUpdates.Models.Football
 
             fd = [
                 new FootballData { AwayGoals = 3, HomeGoals = 3, Status = "Second Half", Teams = [new Team { LogoURL = "url", Name = "SL Benfica" }, new Team { LogoURL = "url2", Name = "FC Porto" }], TimeElapsed = 76, FixtureID = 1 },
-                new FootballData { AwayGoals = 4, HomeGoals = 2, Status = "Second Half", Teams = [new Team { LogoURL = "u", Name = "Boavista FC" }, new Team { LogoURL = "u2", Name = "Sporting CP" }], TimeElapsed = 88, FixtureID = 2 },
+                new FootballData { AwayGoals = 4, HomeGoals = 2, Status = "Finished", Teams = [new Team { LogoURL = "u", Name = "Boavista FC" }, new Team { LogoURL = "u2", Name = "Sporting CP" }], TimeElapsed = 90, FixtureID = 2 },
                 new FootballData { AwayGoals = 1, HomeGoals = 0, Status = "First Half", Teams = [new Team { LogoURL = "slovenia_url", Name = "Slovenia" }, new Team { LogoURL = "armenia_url", Name = "Armenia" }], TimeElapsed = 21, FixtureID = 3 },
                 new FootballData { AwayGoals = 4, HomeGoals = 1, Status = "Second Half", Teams = [new Team { LogoURL = "spain_url", Name = "Spain" }, new Team { LogoURL = "estonia_url", Name = "Estonia" }], TimeElapsed = 56, FixtureID = 4 },
                 new FootballData { AwayGoals = 2, HomeGoals = 2, Status = "First Half", Teams = [new Team { LogoURL = "romania_url", Name = "Romania" }, new Team { LogoURL = "bulgaria_url", Name = "Bulgaria" }], TimeElapsed = 12, FixtureID = 5 },
