@@ -1,4 +1,4 @@
-# NextGen SportsBet Inc.
+# AS Final Project 2023/24
 ## Project developed by
 - João Mourão, 102578
 - Pompeu Costa, 103294
@@ -9,9 +9,9 @@
 
 ## How Frontend interacts with Backend
 
-### Login/Register
+### Login/Register/Logout
 
-The Login and Register pages makes use of the ```/register``` and ```/login``` endpoints to register user information and authenticate user, respectively.
+The Register and Login pages makes use of the ```/register```, ```/login``` and ```/logout``` endpoints to register user information, authenticate user and logout user, respectively.
 
 ### Check if user is logged in 
 
@@ -55,6 +55,11 @@ There are three endpoints to interact with the wallet:
 ### User Information on Profile Page
 
 On profile page it is displayed the user information and their active bets using ```/getUserInfo``` and ```/getBets``` endpoints, respectively.
+
+## Simulate Live Events
+
+The API we were using to retrieve real life events stopped working and started asking for a credit card, so in order to simulate live events update we created the ```/simulateDummyData``` endpoint.
+We can use this endpoint to toggle a boolean state variable that updates game information accordingly. Based on the state, the game data is modified to reflect changes earlier (when true) or later (when false) in time.
 
 
 
