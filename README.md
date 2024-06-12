@@ -23,6 +23,24 @@ The following functionalities require authentication:
 * Bet Checkout Page: Restricts access to the betting checkout process to authenticated users only.
 * Add Balance Button on Navbar: The button to add balance should be visible and functional only for logged-in users.
 
+### Live Event Updates
+
+The application fetches live games and odds information using the ```/getLiveData``` endpoint. This data is initially retrieved when the user enters the Home page and is updated in real-time through MQTT messages on the ```live-update``` topic.
+
+### Mosquitto MQTT configuration
+
+In order to MQTT work it is needed to add this lines to the Mosquitto configuration file (mosquitto.conf):
+```
+listener 1883
+protocol mqtt
+allow_anonymous true
+
+listener 9001
+protocol websockets
+allow_anonymous true
+```
+These lines sets up a listener on port 1883 for standard MQTT protocol, sets up a listener on port 9001 for WebSocket connections and allows anonymous connections.
+
 
 
 
