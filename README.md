@@ -25,7 +25,7 @@ The following functionalities require authentication:
 
 ### Live Event Updates
 
-The application fetches live games and odds information using the ```/getLiveData``` endpoint. This data is initially retrieved when the user enters the Home page and is updated in real-time through MQTT messages on the ```live-update``` topic.
+The application fetches live games and odds information using the ```/getLiveData``` and ```/getLiveEventOdds``` endpoints, respectively. This data is initially retrieved when the user enters the Home page and is updated in real-time through MQTT messages on the ```live-update``` topic.
 
 ### Mosquitto MQTT configuration
 
@@ -40,6 +40,21 @@ protocol websockets
 allow_anonymous true
 ```
 These lines sets up a listener on port 1883 for standard MQTT protocol, sets up a listener on port 9001 for WebSocket connections and allows anonymous connections.
+
+### Wallet Management
+
+There are three endpoints to interact with the wallet:
+* ```/withdraw```: allow user to withdraw money from the wallet.
+* ```/deposit```: allow user to deposit money in the wallet.
+* ```/checkBalance```: allow user to check is wallet balance.
+
+### Create Bets
+
+To create bets it is used the ```/createbet``` endpoint. It receives the prediction of the user, the amount placed and the fixtureId.
+
+### User Information on Profile Page
+
+On profile page it is displayed the user information and their active bets using ```/getUserInfo``` and ```/getBets``` endpoints, respectively.
 
 
 
