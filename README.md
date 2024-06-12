@@ -41,16 +41,16 @@ allow_anonymous true
 ```
 These lines sets up a listener on port 1883 for standard MQTT protocol, sets up a listener on port 9001 for WebSocket connections and allows anonymous connections.
 
+### Create Bets
+
+On the Bet Checkout page, users can place bets by submitting their predictions, the amount they want to bet, and the fixture ID. This data is sent to the ```/createBet``` endpoint to create a new bet.
+
 ### Wallet Management
 
 There are three endpoints to interact with the wallet:
 * ```/withdraw```: allow user to withdraw money from the wallet.
 * ```/deposit```: allow user to deposit money in the wallet.
 * ```/checkBalance```: allow user to check is wallet balance.
-
-### Create Bets
-
-To create bets it is used the ```/createbet``` endpoint. It receives the prediction of the user, the amount placed and the fixtureId.
 
 ### User Information on Profile Page
 
