@@ -29,7 +29,7 @@ The application fetches live games and odds information using the ```/getLiveDat
 
 ### Mosquitto MQTT configuration
 
-In order to MQTT work it is needed to add this lines to the Mosquitto configuration file (mosquitto.conf):
+In order to MQTT work it is needed to add these lines to the Mosquitto configuration file (mosquitto.conf):
 ```
 listener 1883
 protocol mqtt
