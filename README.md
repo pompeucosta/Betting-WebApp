@@ -1,9 +1,7 @@
-# AS Final Project 2023/24
-## Project developed by
-- João Mourão, 102578
-- Pompeu Costa, 103294
-- Rafael Pinto, 103379
-- Ricardo Antunes, 98275
+# Betting WebApp
+This project was developed within the scope of a university project.
+
+The goal was to develop a simple webapp simulating a betting website.
 
 ## Documentation
 
